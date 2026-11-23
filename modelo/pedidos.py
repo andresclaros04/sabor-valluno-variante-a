@@ -205,7 +205,13 @@ class Pedido(ABC):
             raise ValueError("No se puede cobrar un pedido sin productos")
         if self.estado == self.CANCELADO:
             raise ValueError("No se puede cobrar un pedido cancelado")
-        self._comprobante = metodo_pago.procesar_pago(self.calcular_total())
+        if self.metodo_pago is not None:
+            raise ValueError("El pedido ya fue pagado")
+        try:
+            comprobante = metodo_pago.procesar_pago(self.calcular_total())
+        except AttributeError as error:
+            raise TypeError("El objeto no cumple el contrato de MetodoPago") from error
+        self._comprobante = comprobante
         self._metodo_pago = metodo_pago
         return dict(self._comprobante)
 

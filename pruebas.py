@@ -111,6 +111,9 @@ def probar_delivery_y_pagos():
     pedido_local.agregar_producto(silpancho, 1)
     comprobante_efectivo = pedido_local.cobrar(PagoEfectivo(40))
     assert comprobante_efectivo["cambio"] == 5.0
+    verificar_excepcion(
+        ValueError, lambda: pedido_local.cobrar(PagoEfectivo(40))
+    )
 
     pedido_tarjeta = PedidoLocal(5, cliente, 4)
     pedido_tarjeta.agregar_producto(silpancho, 1)

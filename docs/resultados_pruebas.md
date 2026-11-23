@@ -34,4 +34,5 @@ Todas las pruebas superadas
 18. Una mesa con pedido abierto no queda disponible.
 19. El reporte agrupa ventas por tipo de pedido.
 20. El reporte obtiene los productos más vendidos.
+21. Un pedido ya pagado no puede cobrarse por segunda vez.
 
