@@ -45,6 +45,7 @@ def probar_productos():
 
     combo = Combo("Combo valluno", [silpancho, mocochinchi])
     assert combo.calcular_precio() == 36.90
+    assert combo.calcular_descuento() == 4.10
     assert combo.contar_platos() == 1
 
     combo_doble = Combo("Combo doble", [combo, silpancho])
@@ -95,6 +96,8 @@ def probar_delivery_y_pagos():
     )
     delivery.agregar_producto(combo, 2)
     assert delivery.calcular_subtotal() == 73.80
+    assert delivery.calcular_subtotal_bruto() == 82.00
+    assert delivery.calcular_descuentos() == 8.20
     assert delivery.calcular_cargos() == 15.0
     assert delivery.calcular_total() == 88.80
 

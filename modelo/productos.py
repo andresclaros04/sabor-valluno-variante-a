@@ -70,6 +70,10 @@ class Producto(ABC):
         """Permite detectar ciclos sin preguntar por el tipo concreto."""
         return self is producto_buscado
 
+    def calcular_descuento(self):
+        """Los productos simples no aplican descuento."""
+        return 0.0
+
 
 class Plato(Producto):
     """Producto que cuenta como plato y puede limitarse a ciertos días."""
@@ -191,6 +195,14 @@ class Combo(Producto):
     def _calcular_precio_actual(self):
         subtotal = sum(producto.calcular_precio() for producto in self._productos)
         return round(subtotal * (1 - self.DESCUENTO_VARIANTE_A), 2)
+
+    def calcular_descuento(self):
+        subtotal = sum(producto.calcular_precio() for producto in self._productos)
+        descuento_propio = round(subtotal * self.DESCUENTO_VARIANTE_A, 2)
+        descuentos_internos = sum(
+            producto.calcular_descuento() for producto in self._productos
+        )
+        return round(descuento_propio + descuentos_internos, 2)
 
     def agregar_producto(self, producto):
         self._validar_producto(producto)

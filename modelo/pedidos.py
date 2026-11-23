@@ -20,6 +20,7 @@ def validar_producto(producto):
     try:
         producto.nombre
         producto.calcular_precio
+        producto.calcular_descuento
         producto.esta_disponible
         producto.contar_platos
     except AttributeError as error:
@@ -56,6 +57,9 @@ class PedidoProducto:
 
     def calcular_subtotal(self):
         return round(self.producto.calcular_precio() * self.cantidad, 2)
+
+    def calcular_descuento(self):
+        return round(self.producto.calcular_descuento() * self.cantidad, 2)
 
     def contar_platos(self):
         return self.producto.contar_platos() * self.cantidad
@@ -171,6 +175,12 @@ class Pedido(ABC):
     def calcular_subtotal(self):
         return round(sum(item.calcular_subtotal() for item in self._items), 2)
 
+    def calcular_descuentos(self):
+        return round(sum(item.calcular_descuento() for item in self._items), 2)
+
+    def calcular_subtotal_bruto(self):
+        return round(self.calcular_subtotal() + self.calcular_descuentos(), 2)
+
     @abstractmethod
     def calcular_cargos(self):
         """Calcula cargos específicos del tipo de pedido."""
@@ -213,6 +223,8 @@ class Pedido(ABC):
                 }
                 for item in self._items
             ],
+            "subtotal_bruto": self.calcular_subtotal_bruto(),
+            "descuentos": self.calcular_descuentos(),
             "subtotal": self.calcular_subtotal(),
             "cargos": self.calcular_cargos(),
             "total": self.calcular_total(),

@@ -177,7 +177,9 @@ def mostrar_detalle(restaurante):
             f"- {item['producto']} x {item['cantidad']}: "
             f"Bs {item['subtotal']:.2f}"
         )
-    print(f"Subtotal: Bs {detalle['subtotal']:.2f}")
+    print(f"Subtotal bruto: Bs {detalle['subtotal_bruto']:.2f}")
+    print(f"Descuentos: Bs {detalle['descuentos']:.2f}")
+    print(f"Subtotal con descuento: Bs {detalle['subtotal']:.2f}")
     print(f"Cargos: Bs {detalle['cargos']:.2f}")
     print(f"Total: Bs {detalle['total']:.2f}")
 
