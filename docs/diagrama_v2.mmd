@@ -75,7 +75,7 @@ class PedidoLocal {
   +calcular_cargos() float
 }
 class PedidoParaLlevar {
-  +COSTO_ENVASE_POR_PLATO: float
+  #_costo_envase_por_plato: float
   +calcular_cargos() float
 }
 class PedidoDelivery {
@@ -107,7 +107,7 @@ class PagoQR {
   +procesar_pago(total: float) dict
 }
 class PagoTarjeta {
-  +COMISION: float
+  #_porcentaje_comision: float
   +calcular_comision(total: float) float
   +procesar_pago(total: float) dict
 }

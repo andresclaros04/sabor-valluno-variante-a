@@ -267,13 +267,21 @@ class PedidoLocal(Pedido):
 class PedidoParaLlevar(Pedido):
     COSTO_ENVASE_POR_PLATO = 2.0
 
+    def __init__(self, numero_pedido, cliente, fecha_registro=None):
+        super().__init__(numero_pedido, cliente, fecha_registro)
+        self._costo_envase_por_plato = self.COSTO_ENVASE_POR_PLATO
+
+    @property
+    def costo_envase_por_plato(self):
+        return self._costo_envase_por_plato
+
     @property
     def tipo_pedido(self):
         return "PARA_LLEVAR"
 
     def calcular_cargos(self):
         cantidad_platos = sum(item.contar_platos() for item in self._items)
-        return round(cantidad_platos * self.COSTO_ENVASE_POR_PLATO, 2)
+        return round(cantidad_platos * self.costo_envase_por_plato, 2)
 
 
 class PedidoDelivery(Pedido):

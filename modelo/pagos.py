@@ -99,6 +99,10 @@ class PagoQR(MetodoPago):
 class PagoTarjeta(MetodoPago):
     COMISION = 0.03
 
+    def __init__(self):
+        super().__init__()
+        self._porcentaje_comision = self.COMISION
+
     @property
     def nombre(self):
         return "Tarjeta"
@@ -107,9 +111,13 @@ class PagoTarjeta(MetodoPago):
     def permite_delivery(self):
         return False
 
+    @property
+    def porcentaje_comision(self):
+        return self._porcentaje_comision
+
     def calcular_comision(self, total):
         total = validar_total(total)
-        return round(total * self.COMISION, 2)
+        return round(total * self.porcentaje_comision, 2)
 
     def procesar_pago(self, total):
         total = validar_total(total)
