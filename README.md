@@ -84,6 +84,14 @@ Resultado esperado:
 Todas las pruebas superadas
 ```
 
+Antes de entregar también puede ejecutarse:
+
+```text
+python verificar_entrega.py
+```
+
+El verificador comprueba la estructura, ejecuta las pruebas y avisa si el acta conserva campos pendientes.
+
 ## Diseño orientado a objetos
 
 - Encapsulación mediante atributos protegidos, `@property` y setters.
