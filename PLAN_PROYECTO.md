@@ -3,7 +3,7 @@
 ## Estado actual
 
 - Semana 1: modelado en aula declarado como realizado por el estudiante.
-- Diagrama v1: guardado en `docs/diagrama_v1.jpg` y revisado en `docs/revision_diagrama_v1.md`.
+- Diagrama v1: guardado en el formato requerido como `docs/diagrama_v1.png`; la fotografía JPG original también se conserva.
 - Variante asignada: A.
 - Regla de retraso y compensación: pendiente de respuesta del docente.
 - Código: jerarquías principales, clase gestora, menú de consola y pruebas implementados.

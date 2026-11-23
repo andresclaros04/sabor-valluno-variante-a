@@ -23,7 +23,7 @@ sabor_valluno/
 |   |-- pedidos.py
 |   `-- pagos.py
 |-- docs/
-|   |-- diagrama_v1.jpg
+|   |-- diagrama_v1.png
 |   |-- diagrama_v2.png
 |   |-- cambios_v1_v2.md
 |   |-- acta_consultas.md
