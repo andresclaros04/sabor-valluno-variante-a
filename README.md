@@ -92,6 +92,14 @@ python verificar_entrega.py
 
 El verificador comprueba la estructura, ejecuta las pruebas y avisa si el acta conserva campos pendientes.
 
+Cuando el acta esté completa se puede crear el paquete final con:
+
+```text
+python crear_paquete_entrega.py
+```
+
+El script se negará a generar el ZIP si todavía encuentra campos marcados como `pendiente`.
+
 ## Diseño orientado a objetos
 
 - Encapsulación mediante atributos protegidos, `@property` y setters.
