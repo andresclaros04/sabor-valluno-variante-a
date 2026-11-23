@@ -46,5 +46,6 @@
 - [x] El caso de referencia de la variante A produce Bs 88,80.
 - [ ] Ejecutar el proyecto personalmente en VS Code.
 - [ ] Subir el repositorio a GitHub.
+- [ ] Verificar el enlace de GitHub siguiendo `docs/guia_github.md`.
 - [ ] Practicar la defensa sin consultar el código generado por IA.
 
