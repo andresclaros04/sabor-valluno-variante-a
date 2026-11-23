@@ -35,4 +35,6 @@ Todas las pruebas superadas
 19. El reporte agrupa ventas por tipo de pedido.
 20. El reporte obtiene los productos más vendidos.
 21. Un pedido ya pagado no puede cobrarse por segunda vez.
+22. El guardado y carga JSON conserva productos, clientes, pedidos y pagos.
+23. Un pedido recuperado desde JSON mantiene el total de Bs 88,80.
 

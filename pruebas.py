@@ -4,6 +4,8 @@ Se ejecutan con: python pruebas.py
 """
 
 from datetime import datetime
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from modelo.clientes import Cliente
 from modelo.pagos import PagoEfectivo, PagoQR, PagoTarjeta
@@ -14,6 +16,7 @@ from modelo.pedidos import (
 )
 from modelo.productos import Bebida, Combo, Plato, Producto
 from restaurante import Restaurante
+from persistencia import cargar_json, guardar_json
 
 
 def verificar_excepcion(tipo_excepcion, funcion):
@@ -154,9 +157,37 @@ def probar_restaurante():
     assert reporte["total_general"] == 73.80
 
 
+def probar_persistencia_json():
+    restaurante = Restaurante()
+    cliente = Cliente("Mario", "73456789")
+    silpancho, mocochinchi, combo = crear_productos_referencia()
+    restaurante.registrar_cliente(cliente)
+    restaurante.registrar_producto(silpancho)
+    restaurante.registrar_producto(mocochinchi)
+    restaurante.registrar_producto(combo)
+
+    pedido = PedidoDelivery(1, cliente, "Quillacollo")
+    pedido.agregar_producto(combo, 2)
+    pedido.cobrar(PagoQR("1122334455"))
+    restaurante.registrar_pedido(pedido)
+
+    with TemporaryDirectory() as carpeta_temporal:
+        ruta = Path(carpeta_temporal) / "datos.json"
+        guardar_json(restaurante, ruta)
+        restaurante_cargado = cargar_json(ruta)
+
+    assert len(restaurante_cargado.productos) == 3
+    assert len(restaurante_cargado.clientes) == 1
+    assert len(restaurante_cargado.pedidos) == 1
+    pedido_cargado = restaurante_cargado.pedidos[0]
+    assert pedido_cargado.calcular_total() == 88.80
+    assert pedido_cargado.metodo_pago.nombre == "QR"
+
+
 if __name__ == "__main__":
     probar_productos()
     probar_clientes_y_pedidos()
     probar_delivery_y_pagos()
     probar_restaurante()
+    probar_persistencia_json()
     print("Todas las pruebas superadas")

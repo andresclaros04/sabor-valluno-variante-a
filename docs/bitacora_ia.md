@@ -46,3 +46,14 @@ Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo
 - Archivo o clase: `modelo/`, `restaurante.py`, `main.py`, `pruebas.py`
 - ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
 
+## Registro 4
+
+- Fecha: 23/11/2026
+- Herramienta: ChatGPT Codex
+- Tipo de uso: generación y prueba de funcionalidad opcional
+- Consulta textual: continuar completando el proyecto mientras se espera la respuesta sobre retraso
+- Qué se aceptó: guardado y carga de datos mediante JSON
+- Qué se modificó y por qué: se añadió `persistencia.py` separado para no mezclar serialización con los cálculos del modelo
+- Archivo o clase: `persistencia.py`, `main.py`, `pruebas.py`
+- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
+

@@ -30,6 +30,7 @@ sabor_valluno/
 |   |-- bitacora_ia.md
 |   `-- registro_ia_claros.md
 |-- restaurante.py
+|-- persistencia.py
 |-- main.py
 |-- pruebas.py
 `-- README.md
@@ -49,6 +50,7 @@ sabor_valluno/
 - Restricción de tarjeta para delivery.
 - Reporte diario por tipo de pedido.
 - Tres productos más vendidos.
+- Guardado y carga de productos, clientes, pedidos y pagos en JSON.
 - Pruebas con `assert`.
 
 ## Pendientes inmediatos
@@ -96,4 +98,8 @@ Todas las pruebas superadas
 La cantidad de minutos que define un retraso y la compensación correspondiente deben completarse en `docs/acta_consultas.md`. El código no inventa esos valores y exige configurarlos antes de calcular una compensación.
 
 El sistema utiliza únicamente la biblioteca estándar de Python durante su ejecución.
+
+## Persistencia opcional
+
+Las opciones 11 y 12 del menú guardan y cargan el estado en `datos.json`. El archivo conserva productos simples, combos anidados, clientes, pedidos, cantidades, estados y pagos.
 

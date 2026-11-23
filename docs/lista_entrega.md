@@ -14,6 +14,7 @@
 - [x] Polimorfismo en precios, disponibilidad, platos, cargos y pagos.
 - [x] Menú de consola.
 - [x] Reporte diario y productos más vendidos.
+- [x] Guardado y carga opcional en JSON.
 - [x] Más de ocho casos con `assert`.
 - [ ] Completar en el código la respuesta oficial sobre retraso y compensación.
 

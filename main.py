@@ -7,6 +7,7 @@ from modelo.pagos import PagoEfectivo, PagoQR, PagoTarjeta
 from modelo.pedidos import Pedido, PedidoDelivery, PedidoLocal, PedidoParaLlevar
 from modelo.productos import Bebida, Combo, Plato
 from restaurante import Restaurante
+from persistencia import cargar_json, guardar_json
 
 
 def leer_entero(mensaje):
@@ -239,6 +240,19 @@ def mostrar_reporte(restaurante):
         print(f"- {nombre}: {cantidad}")
 
 
+def guardar_datos(restaurante):
+    ruta = input("Archivo JSON (vacío = datos.json): ").strip() or "datos.json"
+    guardar_json(restaurante, ruta)
+    print(f"Datos guardados en {ruta}")
+
+
+def cargar_datos():
+    ruta = input("Archivo JSON (vacío = datos.json): ").strip() or "datos.json"
+    restaurante = cargar_json(ruta)
+    print(f"Datos cargados desde {ruta}")
+    return restaurante
+
+
 def mostrar_menu_principal():
     print(
         "\n=== Sabor Valluno ===\n"
@@ -252,6 +266,8 @@ def mostrar_menu_principal():
         "8. Cambiar estado de pedido\n"
         "9. Cobrar pedido\n"
         "10. Mostrar reporte del día\n"
+        "11. Guardar datos en JSON\n"
+        "12. Cargar datos desde JSON\n"
         "0. Salir"
     )
 
@@ -269,6 +285,7 @@ def ejecutar():
         "8": cambiar_estado,
         "9": cobrar_pedido,
         "10": mostrar_reporte,
+        "11": guardar_datos,
     }
 
     while True:
@@ -277,6 +294,12 @@ def ejecutar():
         if opcion == "0":
             print("Hasta luego")
             break
+        if opcion == "12":
+            try:
+                restaurante = cargar_datos()
+            except (ValueError, TypeError, OSError) as error:
+                print(f"Error: {error}")
+            continue
         accion = acciones.get(opcion)
         if accion is None:
             print("Opción inválida")
