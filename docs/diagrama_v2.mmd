@@ -1,0 +1,145 @@
+classDiagram
+direction TB
+
+class Producto {
+  <<abstract>>
+  #_nombre: str
+  #_precio: float
+  +nombre: str
+  +precio: float
+  +calcular_precio() float
+  +esta_disponible(dia: str) bool
+  +contar_platos() int
+  +contiene(producto: Producto) bool
+}
+class Plato {
+  #_dias_disponibles: set~str~
+  +dias_disponibles: tuple
+  +calcular_precio() float
+  +esta_disponible(dia: str) bool
+  +contar_platos() int
+}
+class Bebida {
+  #_tipo: str
+  #_presentacion: str
+  +calcular_precio() float
+  +esta_disponible(dia: str) bool
+  +contar_platos() int
+}
+class Combo {
+  #_productos: list~Producto~
+  +productos: tuple
+  +descuento: float
+  +agregar_producto(producto: Producto) None
+  +quitar_producto(producto: Producto) None
+  +calcular_precio() float
+  +esta_disponible(dia: str) bool
+  +contar_platos() int
+}
+
+class Cliente {
+  #_nombre: str
+  #_telefono: str
+  +nombre: str
+  +telefono: str
+}
+
+class PedidoProducto {
+  #_producto: Producto
+  #_cantidad: int
+  +cantidad: int
+  +calcular_subtotal() float
+  +contar_platos() int
+}
+
+class Pedido {
+  <<abstract>>
+  #_numero_pedido: int
+  #_cliente: Cliente
+  #_fecha_registro: datetime
+  #_estado: str
+  #_items: list~PedidoProducto~
+  #_metodo_pago: MetodoPago
+  +agregar_producto(producto: Producto, cantidad: int) None
+  +quitar_producto(producto: Producto) None
+  +calcular_subtotal() float
+  +calcular_cargos() float
+  +calcular_total() float
+  +cambiar_estado(nuevo_estado: str) None
+  +cancelar() None
+  +cobrar(metodo_pago: MetodoPago) dict
+}
+class PedidoLocal {
+  #_mesa: int
+  +numero_mesa: int
+  +calcular_cargos() float
+}
+class PedidoParaLlevar {
+  +COSTO_ENVASE_POR_PLATO: float
+  +calcular_cargos() float
+}
+class PedidoDelivery {
+  #_zona: str
+  #_hora_entrega: datetime
+  +PEDIDO_MINIMO: float
+  +ENVIO_GRATIS_CERCADO_DESDE: float
+  +calcular_cargos() float
+  +validar_pedido_minimo() bool
+  +registrar_entrega(hora: datetime) None
+  +esta_retrasado() bool
+  +calcular_compensacion() float
+}
+
+class MetodoPago {
+  <<abstract>>
+  #_monto_pagado: float
+  +nombre: str
+  +permite_delivery: bool
+  +procesar_pago(total: float) dict
+}
+class PagoEfectivo {
+  #_monto_recibido: float
+  +calcular_cambio(total: float) float
+  +procesar_pago(total: float) dict
+}
+class PagoQR {
+  #_codigo_transaccion: str
+  +procesar_pago(total: float) dict
+}
+class PagoTarjeta {
+  +COMISION: float
+  +calcular_comision(total: float) float
+  +procesar_pago(total: float) dict
+}
+
+class Restaurante {
+  #_productos: list~Producto~
+  #_clientes: list~Cliente~
+  #_pedidos: list~Pedido~
+  +registrar_producto(producto: Producto) None
+  +registrar_cliente(cliente: Cliente) None
+  +registrar_pedido(pedido: Pedido) None
+  +listar_menu_disponible(dia: str) tuple
+  +mesa_disponible(mesa: int) bool
+  +reporte_ventas(fecha: date) dict
+  +productos_mas_vendidos() list
+}
+
+Producto <|-- Plato
+Producto <|-- Bebida
+Producto <|-- Combo
+Pedido <|-- PedidoLocal
+Pedido <|-- PedidoParaLlevar
+Pedido <|-- PedidoDelivery
+MetodoPago <|-- PagoEfectivo
+MetodoPago <|-- PagoQR
+MetodoPago <|-- PagoTarjeta
+Combo "1" *-- "2..*" Producto : contiene
+Pedido "1" *-- "0..*" PedidoProducto
+PedidoProducto "0..*" --> "1" Producto
+Cliente "1" --> "0..*" Pedido
+Pedido "1" --> "0..1" MetodoPago
+Restaurante "1" o-- "0..*" Producto
+Restaurante "1" o-- "0..*" Cliente
+Restaurante "1" o-- "0..*" Pedido
+
