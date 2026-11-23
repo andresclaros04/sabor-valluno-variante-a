@@ -1,0 +1,18 @@
+# Registro personal de uso de IA
+
+- Estudiante: Andrés Claros
+- Variante: A
+- Proyecto: Sistema de Pedidos Sabor Valluno
+
+| N.º | Fecha | Herramienta | Tipo de uso | Consulta | Qué acepté | Qué modifiqué y por qué | Archivo o clase | ¿Lo explico sin ayuda? |
+|---:|---|---|---|---|---|---|---|---|
+| 1 | 23/11/2026 | ChatGPT Codex | Concepto y planificación | Interpretar entregas y organizar el trabajo desde la semana 2 | Estructura semanal y entregables | Se dejó el código pendiente hasta conocer la variante | `PLAN_PROYECTO.md` | Pendiente |
+| 2 | 23/11/2026 | ChatGPT Codex | Revisión | Revisar la fotografía del diagrama v1 | Lista de cambios para el v2 | Se conservó el v1 original y se documentaron las diferencias | `docs/revision_diagrama_v1.md` | Pendiente |
+| 3 | 23/11/2026 | ChatGPT Codex | Generación y revisión de código | Implementar la variante A según la consigna | Jerarquías, validaciones, menú, pruebas y documentación | Se eliminó la comprobación por tipo en `Combo` y se dejó sin inventar la regla de retraso | `modelo/`, `restaurante.py`, `main.py`, `pruebas.py` | Pendiente |
+
+## Declaración
+
+Declaro que este registro incluye los usos de IA realizados en el proyecto y que revisaré cada archivo hasta poder explicar y modificar el código sin ayuda.
+
+Firma: ______________________________
+
