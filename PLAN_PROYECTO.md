@@ -81,10 +81,11 @@ sabor_valluno/
 `-- README.md
 ```
 
-## Condiciones para iniciar el código
+## Acciones personales antes de entregar
 
-- Mantener todas las reglas alineadas con la variante A.
-- Conservar el diagrama v1 original y trasladar las correcciones documentadas al v2.
-- Confirmar con el docente si permite asistencia de IA durante la semana 2.
-- Conservar la respuesta sobre retraso y compensación en el acta.
+- Ejecutar y explicar personalmente todas las funciones.
+- Completar la autoevaluación del registro de IA y firmarla.
+- Consultar con el docente cómo registrar el uso de IA durante la fase indicada como “sin IA”.
+- Practicar la defensa y los dos posibles cambios en vivo.
+- Publicar en GitHub después de recibir el visto bueno.
 

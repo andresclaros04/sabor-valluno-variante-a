@@ -53,12 +53,16 @@ sabor_valluno/
 - Guardado y carga de productos, clientes, pedidos y pagos en JSON.
 - Pruebas con `assert`.
 
-## Pendientes inmediatos
+## Estado del entregable
 
-1. Completar las respuestas del docente en `docs/acta_consultas.md`.
-2. Revisar los ajustes propuestos en `docs/revision_diagrama_v1.md`.
-3. Preparar el diagrama v2 final.
-4. Conservar en el acta la decisión del docente de no evaluar retraso ni compensación.
+El código, las pruebas, el acta, los diagramas y la documentación técnica están completos. Antes de solicitar el visto bueno, el estudiante debe:
+
+1. Ejecutar personalmente `main.py`, `demo.py`, `pruebas.py` y `verificar_entrega.py` en VS Code.
+2. Completar honestamente la columna “¿Lo explico sin ayuda?” del registro de IA.
+3. Firmar el registro personal de IA.
+4. Practicar la defensa y los cambios en vivo.
+5. Consultar con el docente el uso de IA realizado durante una fase inicialmente indicada como “sin IA”.
+6. Publicar en GitHub solamente después de recibir el visto bueno.
 
 ## Ejecución
 
@@ -90,7 +94,7 @@ Antes de entregar también puede ejecutarse:
 python verificar_entrega.py
 ```
 
-El verificador comprueba la estructura, ejecuta las pruebas y avisa si el acta conserva campos pendientes.
+El verificador comprueba la estructura, ejecuta las pruebas y confirma que el acta no conserve campos pendientes.
 
 Para ensayar el caso de referencia sin introducir datos manualmente:
 
@@ -98,13 +102,13 @@ Para ensayar el caso de referencia sin introducir datos manualmente:
 python demo.py
 ```
 
-Cuando el acta esté completa se puede crear el paquete final con:
+Para volver a crear el paquete final se utiliza:
 
 ```text
 python crear_paquete_entrega.py
 ```
 
-El script se negará a generar el ZIP si todavía encuentra campos marcados como `pendiente`.
+El script se negará a generar el ZIP si el acta vuelve a contener campos marcados como `pendiente`.
 
 ## Diseño orientado a objetos
 
