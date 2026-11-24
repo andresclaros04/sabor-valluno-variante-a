@@ -71,9 +71,9 @@ Caso de referencia de la variante A:
 7. ¿Por qué delivery rechaza tarjeta?
 8. ¿Dónde están las reglas específicas de la variante A?
 9. ¿Cómo se evita que un combo se contenga a sí mismo?
-10. ¿Qué regla sigue pendiente de respuesta del docente?
+10. ¿Por qué no se implementó el retraso de delivery? Respuesta: porque el docente decidió excluir esa regla y la decisión está registrada en el acta.
 
 ## Ensayo recomendado
 
-Ejecutar `pruebas.py`, elegir tres clases al azar y explicarlas línea por línea. Luego realizar una vez cada posible cambio en vivo y restaurar el archivo mediante Git.
+Ejecutar `demo.py` para presentar el caso de referencia, ejecutar `pruebas.py`, elegir tres clases al azar y explicarlas línea por línea. Luego realizar una vez cada posible cambio en vivo y restaurar el archivo mediante Git.
 

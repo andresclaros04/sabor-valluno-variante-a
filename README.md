@@ -58,7 +58,7 @@ sabor_valluno/
 1. Completar las respuestas del docente en `docs/acta_consultas.md`.
 2. Revisar los ajustes propuestos en `docs/revision_diagrama_v1.md`.
 3. Preparar el diagrama v2 final.
-4. Confirmar la regla de retraso y compensación antes de cerrar el proyecto.
+4. Conservar en el acta la decisión del docente de no evaluar retraso ni compensación.
 
 ## Ejecución
 
@@ -92,6 +92,12 @@ python verificar_entrega.py
 
 El verificador comprueba la estructura, ejecuta las pruebas y avisa si el acta conserva campos pendientes.
 
+Para ensayar el caso de referencia sin introducir datos manualmente:
+
+```text
+python demo.py
+```
+
 Cuando el acta esté completa se puede crear el paquete final con:
 
 ```text
@@ -109,9 +115,9 @@ El script se negará a generar el ZIP si todavía encuentra campos marcados como
 - Composición de `Combo` con productos y de `Pedido` con `PedidoProducto`.
 - Agregación de productos, clientes y pedidos en `Restaurante`.
 
-## Regla pendiente de consulta
+## Decisión sobre retraso de delivery
 
-La cantidad de minutos que define un retraso y la compensación correspondiente deben completarse en `docs/acta_consultas.md`. El código no inventa esos valores y exige configurarlos antes de calcular una compensación.
+El docente decidió no tomar en cuenta el tiempo de demora ni la compensación de delivery. La decisión está registrada en `docs/acta_consultas.md`, por lo que `PedidoDelivery` no contiene cálculos de penalización por tiempo.
 
 El sistema utiliza únicamente la biblioteca estándar de Python durante su ejecución.
 

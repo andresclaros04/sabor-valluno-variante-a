@@ -5,7 +5,7 @@
 - Semana 1: modelado en aula declarado como realizado por el estudiante.
 - Diagrama v1: guardado en el formato requerido como `docs/diagrama_v1.png`; la fotografía JPG original también se conserva.
 - Variante asignada: A.
-- Regla de retraso y compensación: pendiente de respuesta del docente.
+- Regla de retraso y compensación: excluida del proyecto por decisión del docente registrada el 23/11/2026.
 - Código: jerarquías principales, clase gestora, menú de consola y pruebas implementados.
 
 ## Semana 2 Productos y encapsulación
@@ -39,7 +39,7 @@ Commits sugeridos:
 7. Crear la clase abstracta `MetodoPago`.
 8. Implementar `PagoEfectivo`, `PagoQR` y `PagoTarjeta`.
 9. Restringir tarjeta para pedidos delivery.
-10. Aplicar la regla de retraso documentada por el docente.
+10. Mantener registrada en el acta la decisión de no implementar retraso ni compensación.
 11. Realizar al menos cuatro commits adicionales.
 
 ## Semana 4 Integración y defensa
@@ -86,5 +86,5 @@ sabor_valluno/
 - Mantener todas las reglas alineadas con la variante A.
 - Conservar el diagrama v1 original y trasladar las correcciones documentadas al v2.
 - Confirmar con el docente si permite asistencia de IA durante la semana 2.
-- Registrar la respuesta sobre retraso y compensación en el acta.
+- Conservar la respuesta sobre retraso y compensación en el acta.
 

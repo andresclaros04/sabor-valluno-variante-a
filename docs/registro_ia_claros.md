@@ -8,8 +8,8 @@
 |---:|---|---|---|---|---|---|---|---|
 | 1 | 23/11/2026 | ChatGPT Codex | Concepto y planificación | Interpretar entregas y organizar el trabajo desde la semana 2 | Estructura semanal y entregables | Se dejó el código pendiente hasta conocer la variante | `PLAN_PROYECTO.md` | Pendiente |
 | 2 | 23/11/2026 | ChatGPT Codex | Revisión | Revisar la fotografía del diagrama v1 | Lista de cambios para el v2 | Se conservó el v1 original y se documentaron las diferencias | `docs/revision_diagrama_v1.md` | Pendiente |
-| 3 | 23/11/2026 | ChatGPT Codex | Generación y revisión de código | Implementar la variante A según la consigna | Jerarquías, validaciones, menú, pruebas y documentación | Se eliminó la comprobación por tipo en `Combo` y se dejó sin inventar la regla de retraso | `modelo/`, `restaurante.py`, `main.py`, `pruebas.py` | Pendiente |
-| 4 | 23/11/2026 | ChatGPT Codex | Funcionalidad opcional | Completar el proyecto mientras se espera la respuesta sobre retraso | Persistencia JSON | Se separó la serialización en `persistencia.py` para no mezclarla con el modelo | `persistencia.py`, `main.py`, `pruebas.py` | Pendiente |
+| 3 | 23/11/2026 | ChatGPT Codex | Generación y revisión de código | Implementar la variante A según la consigna | Jerarquías, validaciones, menú, pruebas y documentación | Se eliminó la comprobación por tipo en `Combo`; la regla de retraso se retiró después de que el docente decidió no evaluarla | `modelo/`, `restaurante.py`, `main.py`, `pruebas.py` | Pendiente |
+| 4 | 23/11/2026 | ChatGPT Codex | Funcionalidad opcional | Completar persistencia y pruebas | Persistencia JSON | Se separó la serialización en `persistencia.py` para no mezclarla con el modelo | `persistencia.py`, `main.py`, `pruebas.py` | Pendiente |
 
 ## Declaración
 

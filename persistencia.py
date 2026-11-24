@@ -76,9 +76,6 @@ def _pedido_a_diccionario(pedido):
     elif isinstance(pedido, PedidoDelivery):
         datos["clase"] = "PedidoDelivery"
         datos["zona"] = pedido.zona
-        datos["hora_entrega"] = (
-            pedido.hora_entrega.isoformat() if pedido.hora_entrega else None
-        )
     else:
         raise TypeError("Hay un pedido que no se puede guardar")
     return datos
@@ -156,7 +153,7 @@ def _crear_metodo_pago(datos):
     raise ValueError("El JSON contiene un método de pago desconocido")
 
 
-def _restaurar_estado(pedido, estado, hora_entrega=None):
+def _restaurar_estado(pedido, estado):
     if estado == Pedido.REGISTRADO:
         return
     if estado == Pedido.CANCELADO:
@@ -170,10 +167,7 @@ def _restaurar_estado(pedido, estado, hora_entrega=None):
     if estado == Pedido.LISTO:
         return
 
-    if isinstance(pedido, PedidoDelivery) and hora_entrega:
-        pedido.registrar_entrega(datetime.fromisoformat(hora_entrega))
-    else:
-        pedido.cambiar_estado(Pedido.ENTREGADO)
+    pedido.cambiar_estado(Pedido.ENTREGADO)
 
 
 def cargar_json(ruta="datos.json"):
@@ -216,11 +210,7 @@ def cargar_json(ruta="datos.json"):
         if metodo_pago is not None:
             pedido.cobrar(metodo_pago)
 
-        _restaurar_estado(
-            pedido,
-            datos_pedido["estado"],
-            datos_pedido.get("hora_entrega"),
-        )
+        _restaurar_estado(pedido, datos_pedido["estado"])
         restaurante.registrar_pedido(pedido)
 
     return restaurante

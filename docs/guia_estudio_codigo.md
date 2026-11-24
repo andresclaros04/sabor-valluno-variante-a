@@ -106,7 +106,7 @@ Ejercicio: calcular los envases de dos combos que contienen un plato cada uno.
 - Aplica pedido mínimo de Bs 40.
 - Cercado tiene envío gratis desde Bs 150.
 - Rechaza métodos de pago que no permitan delivery.
-- La regla de retraso permanece configurable hasta recibir la respuesta del docente.
+- No calcula retraso ni compensación porque el docente decidió excluir esa regla del proyecto; la decisión está registrada en el acta.
 
 ## 6 Estudiar los pagos
 

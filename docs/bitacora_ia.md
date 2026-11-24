@@ -42,7 +42,7 @@ Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo
 - Tipo de uso: generación y revisión de código
 - Consulta textual: confirmación de la variante A y solicitud de continuar el proyecto
 - Qué se aceptó: jerarquías de productos, pedidos y pagos; clase gestora; pruebas y menú de consola
-- Qué se modificó y por qué: se eliminó la comprobación por tipo dentro de `Combo` para usar polimorfismo y se dejó pendiente la regla de retraso hasta recibir la respuesta del docente
+- Qué se modificó y por qué: se eliminó la comprobación por tipo dentro de `Combo` para usar polimorfismo; posteriormente se retiró la regla de retraso porque el docente decidió no evaluarla
 - Archivo o clase: `modelo/`, `restaurante.py`, `main.py`, `pruebas.py`
 - ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
 
@@ -51,7 +51,7 @@ Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo
 - Fecha: 23/11/2026
 - Herramienta: ChatGPT Codex
 - Tipo de uso: generación y prueba de funcionalidad opcional
-- Consulta textual: continuar completando el proyecto mientras se espera la respuesta sobre retraso
+- Consulta textual: continuar completando el proyecto mientras se confirmaba el alcance de la regla de retraso
 - Qué se aceptó: guardado y carga de datos mediante JSON
 - Qué se modificó y por qué: se añadió `persistencia.py` separado para no mezclar serialización con los cálculos del modelo
 - Archivo o clase: `persistencia.py`, `main.py`, `pruebas.py`

@@ -303,9 +303,6 @@ class PedidoDelivery(Pedido):
     def __init__(self, numero_pedido, cliente, zona, fecha_registro=None):
         super().__init__(numero_pedido, cliente, fecha_registro)
         self.zona = zona
-        self._hora_entrega = None
-        self._limite_retraso_minutos = None
-        self._compensacion_retraso = None
 
     @property
     def tipo_pedido(self):
@@ -321,10 +318,6 @@ class PedidoDelivery(Pedido):
         if zona not in self.COSTOS_ENVIO:
             raise ValueError("La zona de delivery no está registrada")
         self._zona = zona
-
-    @property
-    def hora_entrega(self):
-        return self._hora_entrega
 
     def calcular_cargos(self):
         if (
@@ -347,32 +340,4 @@ class PedidoDelivery(Pedido):
             raise ValueError("Delivery solo acepta efectivo o QR")
         return super().cobrar(metodo_pago)
 
-    def configurar_regla_retraso(self, limite_minutos, compensacion):
-        if limite_minutos <= 0 or compensacion < 0:
-            raise ValueError("La regla de retraso contiene valores inválidos")
-        self._limite_retraso_minutos = limite_minutos
-        self._compensacion_retraso = round(float(compensacion), 2)
-
-    def registrar_entrega(self, hora_entrega):
-        try:
-            hora_entrega - self.fecha_registro
-        except TypeError as error:
-            raise TypeError("La hora de entrega debe ser datetime") from error
-        self.cambiar_estado(self.ENTREGADO)
-        self._hora_entrega = hora_entrega
-
-    def esta_retrasado(self):
-        if self._limite_retraso_minutos is None:
-            raise ValueError("La regla de retraso debe consultarse al docente")
-        if self.hora_entrega is None:
-            return False
-        minutos = (self.hora_entrega - self.fecha_registro).total_seconds() / 60
-        return minutos > self._limite_retraso_minutos
-
-    def calcular_compensacion(self):
-        if self._compensacion_retraso is None:
-            raise ValueError("La compensación debe consultarse al docente")
-        if self.esta_retrasado():
-            return self._compensacion_retraso
-        return 0.0
 

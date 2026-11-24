@@ -16,7 +16,7 @@
 - [x] Reporte diario y productos más vendidos.
 - [x] Guardado y carga opcional en JSON.
 - [x] Más de ocho casos con `assert`.
-- [ ] Completar en el código la respuesta oficial sobre retraso y compensación.
+- [x] Registrar la decisión del docente de excluir retraso y compensación.
 
 ## Variante A
 
@@ -36,7 +36,8 @@
 - [x] Acta de consultas iniciada.
 - [x] README creado.
 - [x] Guía de defensa creada.
-- [ ] Completar nombre, respuestas y firma en el acta.
+- [x] Completar nombre y respuesta del docente en el acta.
+- [ ] Agregar la firma del estudiante en el registro personal antes de entregar.
 - [ ] Cambiar “Pendiente” por la respuesta personal en la columna “¿Lo explico sin ayuda?”.
 
 ## Verificación final

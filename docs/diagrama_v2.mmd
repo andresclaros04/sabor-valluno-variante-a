@@ -80,14 +80,10 @@ class PedidoParaLlevar {
 }
 class PedidoDelivery {
   #_zona: str
-  #_hora_entrega: datetime
   +PEDIDO_MINIMO: float
   +ENVIO_GRATIS_CERCADO_DESDE: float
   +calcular_cargos() float
   +validar_pedido_minimo() bool
-  +registrar_entrega(hora: datetime) None
-  +esta_retrasado() bool
-  +calcular_compensacion() float
 }
 
 class MetodoPago {
