@@ -1,6 +1,6 @@
 # Revisión del diagrama de clases v1
 
-Esta revisión conserva el diagrama realizado en aula. Los ajustes se aplicarán en el diagrama v2 y deberán explicarse durante la defensa.
+Esta revisión conserva el diagrama realizado en aula y sellado por el docente. La fotografía aprobada se guarda sin alteraciones en `docs/diagrama_v1.png`. Los ajustes se aplican únicamente en el diagrama v2 y deberán explicarse durante la defensa.
 
 ## Elementos presentes en el v1
 
@@ -49,7 +49,7 @@ Esta revisión conserva el diagrama realizado en aula. Los ajustes se aplicarán
 | Qr | `PagoQR` |
 | Tarjeta | `PagoTarjeta` |
 
-## Dato todavía necesario
+## Variante confirmada
 
-La variante A, B, C, D, E o F debe confirmarse antes de implementar los cálculos. Este dato cambia el descuento del combo, los envases, el envío gratis, el pedido mínimo y una regla adicional.
+La variante asignada y confirmada es la A: descuento de combo del 10 %, Bs 2 por plato para llevar, envío gratuito desde Bs 150 únicamente en Cercado, pedido mínimo delivery de Bs 40 y chicharrón disponible solamente los domingos.
 

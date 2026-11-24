@@ -68,3 +68,14 @@ Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo
 - Archivo o clase: `docs/diagrama_v2.mmd`, `docs/diagrama_v2.png`
 - ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
 
+## Registro 6
+
+- Fecha: 23/11/2026
+- Herramienta: ChatGPT Codex
+- Tipo de uso: revisión visual con fotografía del diagrama v1 aprobado
+- Consulta textual: "ese el diagrama que fue sellado por el docente"
+- Qué se aceptó: utilizar la fotografía sellada como línea base oficial y mantener en el v2 la misma distribución visual de productos, pedidos, pagos, cliente y clases hijas
+- Qué se modificó y por qué: se reemplazó `docs/diagrama_v1.png` por la fotografía aprobada; el v2 se reorganizó para seguir el formato del papel, se conservaron las cajas y flechas de herencia y se añadió un reporte detallado que justifica cada diferencia. El código no se modificó.
+- Archivo o clase: `docs/diagrama_v1.png`, `docs/diagrama_v2.png`, `docs/diagrama_v2.mmd`, `docs/cambios_v1_v2.md`, `docs/revision_diagrama_v1.md`
+- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
+
