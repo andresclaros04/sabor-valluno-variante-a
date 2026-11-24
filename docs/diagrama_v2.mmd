@@ -7,31 +7,46 @@ class Producto {
   #_precio: float
   +nombre: str
   +precio: float
-  +calcular_precio() float
-  +esta_disponible(dia: str) bool
-  +contar_platos() int
-  +contiene(producto: Producto) bool
+  +__init__(nombre: str, precio: float) None
+  +calcular_precio()* float
+  +esta_disponible(dia: str)* bool
+  +contar_platos()* int
+  +contiene(producto_buscado: Producto) bool
+  +calcular_descuento() float
 }
+
 class Plato {
   #_dias_disponibles: set~str~
-  +dias_disponibles: tuple
+  +dias_disponibles: tuple~str~
+  +__init__(nombre: str, precio: float, dias_disponibles: iterable) None
   +calcular_precio() float
   +esta_disponible(dia: str) bool
   +contar_platos() int
 }
+
 class Bebida {
   #_tipo: str
   #_presentacion: str
+  +tipo: str
+  +presentacion: str
+  +__init__(nombre: str, precio: float, tipo: str, presentacion: str) None
   +calcular_precio() float
   +esta_disponible(dia: str) bool
   +contar_platos() int
 }
+
 class Combo {
+  +DESCUENTO_VARIANTE_A: float = 0.10
   #_productos: list~Producto~
-  +productos: tuple
+  +productos: tuple~Producto~
   +descuento: float
+  +__init__(nombre: str, productos: iterable~Producto~) None
+  #_validar_producto(producto: Producto) None
+  #_calcular_precio_actual() float
+  +calcular_descuento() float
   +agregar_producto(producto: Producto) None
   +quitar_producto(producto: Producto) None
+  +contiene(producto_buscado: Producto) bool
   +calcular_precio() float
   +esta_disponible(dia: str) bool
   +contar_platos() int
@@ -42,83 +57,152 @@ class Cliente {
   #_telefono: str
   +nombre: str
   +telefono: str
+  +__init__(nombre: str, telefono: str) None
+  +__str__() str
 }
 
 class PedidoProducto {
   #_producto: Producto
   #_cantidad: int
+  +producto: Producto
   +cantidad: int
+  +__init__(producto: Producto, cantidad: int) None
   +calcular_subtotal() float
+  +calcular_descuento() float
   +contar_platos() int
 }
 
 class Pedido {
   <<abstract>>
+  +REGISTRADO: str
+  +EN_PREPARACION: str
+  +LISTO: str
+  +ENTREGADO: str
+  +CANCELADO: str
+  +TRANSICIONES: dict
   #_numero_pedido: int
   #_cliente: Cliente
   #_fecha_registro: datetime
   #_estado: str
   #_items: list~PedidoProducto~
   #_metodo_pago: MetodoPago
+  #_comprobante: dict
+  +numero_pedido: int
+  +cliente: Cliente
+  +fecha_registro: datetime
+  +dia: str
+  +estado: str
+  +items: tuple~PedidoProducto~
+  +metodo_pago: MetodoPago
+  +comprobante: dict
+  +esta_abierto: bool
+  +numero_mesa: int
+  +tipo_pedido: str
+  +__init__(numero_pedido: int, cliente: Cliente, fecha_registro: datetime) None
+  #_validar_modificable() None
   +agregar_producto(producto: Producto, cantidad: int) None
   +quitar_producto(producto: Producto) None
   +calcular_subtotal() float
-  +calcular_cargos() float
+  +calcular_descuentos() float
+  +calcular_subtotal_bruto() float
+  +calcular_cargos()* float
   +calcular_total() float
   +cambiar_estado(nuevo_estado: str) None
   +cancelar() None
   +cobrar(metodo_pago: MetodoPago) dict
+  +detalle() dict
 }
+
 class PedidoLocal {
   #_mesa: int
+  +tipo_pedido: str
+  +mesa: int
   +numero_mesa: int
+  +__init__(numero_pedido: int, cliente: Cliente, mesa: int, fecha_registro: datetime) None
   +calcular_cargos() float
 }
+
 class PedidoParaLlevar {
+  +COSTO_ENVASE_POR_PLATO: float = 2.0
   #_costo_envase_por_plato: float
+  +costo_envase_por_plato: float
+  +tipo_pedido: str
+  +__init__(numero_pedido: int, cliente: Cliente, fecha_registro: datetime) None
   +calcular_cargos() float
 }
+
 class PedidoDelivery {
+  +COSTOS_ENVIO: dict
+  +PEDIDO_MINIMO: float = 40.0
+  +ENVIO_GRATIS_CERCADO_DESDE: float = 150.0
   #_zona: str
-  +PEDIDO_MINIMO: float
-  +ENVIO_GRATIS_CERCADO_DESDE: float
+  +tipo_pedido: str
+  +zona: str
+  +__init__(numero_pedido: int, cliente: Cliente, zona: str, fecha_registro: datetime) None
   +calcular_cargos() float
   +validar_pedido_minimo() bool
+  +cobrar(metodo_pago: MetodoPago) dict
 }
 
 class MetodoPago {
   <<abstract>>
   #_monto_pagado: float
+  +monto_pagado: float
   +nombre: str
   +permite_delivery: bool
-  +procesar_pago(total: float) dict
+  +__init__() None
+  +procesar_pago(total: float)* dict
 }
+
 class PagoEfectivo {
   #_monto_recibido: float
+  +nombre: str
+  +monto_recibido: float
+  +__init__(monto_recibido: float) None
   +calcular_cambio(total: float) float
   +procesar_pago(total: float) dict
 }
+
 class PagoQR {
   #_codigo_transaccion: str
+  +nombre: str
+  +codigo_transaccion: str
+  +__init__(codigo_transaccion: str) None
   +procesar_pago(total: float) dict
 }
+
 class PagoTarjeta {
+  +COMISION: float = 0.03
   #_porcentaje_comision: float
+  +nombre: str
+  +permite_delivery: bool
+  +porcentaje_comision: float
+  +__init__() None
   +calcular_comision(total: float) float
   +procesar_pago(total: float) dict
 }
 
 class Restaurante {
+  #_nombre: str
   #_productos: list~Producto~
   #_clientes: list~Cliente~
   #_pedidos: list~Pedido~
+  +nombre: str
+  +productos: tuple~Producto~
+  +clientes: tuple~Cliente~
+  +pedidos: tuple~Pedido~
+  +siguiente_numero_pedido: int
+  +__init__(nombre: str) None
   +registrar_producto(producto: Producto) None
+  +buscar_producto(nombre: str) Producto
+  +listar_menu_disponible(dia: str) tuple~Producto~
   +registrar_cliente(cliente: Cliente) None
-  +registrar_pedido(pedido: Pedido) None
-  +listar_menu_disponible(dia: str) tuple
+  +buscar_cliente(telefono: str) Cliente
   +mesa_disponible(mesa: int) bool
+  +registrar_pedido(pedido: Pedido) None
+  +buscar_pedido(numero_pedido: int) Pedido
   +reporte_ventas(fecha: date) dict
-  +productos_mas_vendidos() list
+  +productos_mas_vendidos(pedidos: list, limite: int) list
 }
 
 Producto <|-- Plato
@@ -130,12 +214,20 @@ Pedido <|-- PedidoDelivery
 MetodoPago <|-- PagoEfectivo
 MetodoPago <|-- PagoQR
 MetodoPago <|-- PagoTarjeta
-Combo "1" *-- "2..*" Producto : contiene
-Pedido "1" *-- "0..*" PedidoProducto
-PedidoProducto "0..*" --> "1" Producto
-Cliente "1" --> "0..*" Pedido
-Pedido "1" --> "0..1" MetodoPago
-Restaurante "1" o-- "0..*" Producto
-Restaurante "1" o-- "0..*" Cliente
-Restaurante "1" o-- "0..*" Pedido
 
+Combo "1" *-- "2..*" Producto : contiene
+Pedido "1" *-- "0..*" PedidoProducto : contiene
+PedidoProducto "0..*" --> "1" Producto : referencia
+Cliente "1" --> "0..*" Pedido : realiza
+Pedido "1" --> "0..1" MetodoPago : usa
+Restaurante "1" o-- "0..*" Producto : administra
+Restaurante "1" o-- "0..*" Cliente : registra
+Restaurante "1" o-- "0..*" Pedido : gestiona
+
+note for Combo "Cambios 1 y 3: Combo ahora hereda de Producto. ComboProductos se reemplaza por _productos y la composición con 2..* productos."
+note for PedidoProducto "Cambio 2: cantidad deja de pertenecer a Producto y pasa a la línea PedidoProducto."
+note for Producto "Cambio 4: Producto define los contratos abstractos de precio, disponibilidad y conteo de platos."
+note for Pedido "Cambios 5 y 6: se renombran las subclases y Pedido incorpora fecha, ítems, pago, subtotales, estados y cobro. tipo_pedido y calcular_cargos son abstractos."
+note for MetodoPago "Cambios 7 y 8: Pago se renombra MetodoPago. nombre y procesar_pago son abstractos; cada subclase procesa el pago polimórficamente."
+note for Restaurante "Cambios 9 y 10: se agrega la clase gestora con relaciones, multiplicidades, visibilidad y tipos."
+note for PedidoDelivery "Cambios 11 y 12: se agrega la variante A. Se elimina retraso y compensación por decisión registrada del docente."

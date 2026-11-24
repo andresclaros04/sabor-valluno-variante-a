@@ -57,3 +57,14 @@ Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo
 - Archivo o clase: `persistencia.py`, `main.py`, `pruebas.py`
 - ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
 
+## Registro 5
+
+- Fecha: 23/11/2026
+- Herramienta: ChatGPT Codex
+- Tipo de uso: revisión y corrección del diagrama de clases v2
+- Consulta textual: "entonces hagamos las correcciones mas importante, empezando por el que tiene que ver con el diagrama que es el pilar de este proyecto y ademas recuerdo que el docente repitio emcarecidamente que el codigo debe estar deacuerdo a los diagrmas"
+- Qué se aceptó: completar el diagrama v2 para que represente fielmente el código actual y las exigencias del documento del docente
+- Qué se modificó y por qué: se agregaron atributos, propiedades, constructores, métodos, tipos, visibilidad, relaciones, multiplicidades y doce notas de cambios respecto al v1. También se verificó automáticamente que las 15 clases y sus 126 métodos aparezcan en el archivo Mermaid. No se modificó el código del modelo en esta etapa.
+- Archivo o clase: `docs/diagrama_v2.mmd`, `docs/diagrama_v2.png`
+- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
+
