@@ -22,9 +22,9 @@ Esta revisión conserva el diagrama realizado en aula y sellado por el docente. 
 3. `Producto` debe declarar los métodos abstractos `calcular_precio()`, `esta_disponible(dia)` y `contar_platos()`.
 4. `Pedido` debe declarar `calcular_cargos()` como método abstracto.
 5. `Pago` debe renombrarse a `MetodoPago` para coincidir con la consigna, y declarar `procesar_pago()` como método abstracto.
-6. Las subclases deben utilizar nombres en PascalCase: `PedidoLocal`, `PedidoParaLlevar`, `PedidoDelivery`, `PagoEfectivo`, `PagoQR` y `PagoTarjeta`.
+6. Las subclases deben utilizar nombres en PascalCase: `Local`, `ParaLlevar`, `Delivery`, `Efectivo`, `QR` y `Tarjeta`.
 7. Todos los atributos y métodos deben incluir visibilidad, parámetros, tipos y retornos.
-8. Debe añadirse la clase gestora `Restaurante` con relaciones y multiplicidades hacia productos, clientes y pedidos.
+8. La versión final conserva solo las clases dibujadas en el papel; la coordinación general se resuelve fuera del modelo mediante funciones.
 9. La composición de `Combo` con `Producto` debe indicar que contiene `2..*` productos.
 10. `Pedido` debe componerse de `0..*` objetos `PedidoProducto`; cada `PedidoProducto` referencia exactamente un `Producto` y almacena su cantidad.
 11. La relación `Cliente` a `Pedido` debe mostrar un cliente por pedido y cero o muchos pedidos por cliente.
@@ -41,15 +41,14 @@ Esta revisión conserva el diagrama realizado en aula y sellado por el docente. 
 | ComboProductos | Se representa mediante la colección protegida de productos de `Combo` |
 | PedidoProducto | `PedidoProducto` |
 | Pedido | `Pedido` |
-| Local | `PedidoLocal` |
-| Llevar | `PedidoParaLlevar` |
-| Delivery | `PedidoDelivery` |
+| Local | `Local` |
+| Llevar | `ParaLlevar` |
+| Delivery | `Delivery` |
 | Pago | `MetodoPago` |
-| Efectivo | `PagoEfectivo` |
-| Qr | `PagoQR` |
-| Tarjeta | `PagoTarjeta` |
+| Efectivo | `Efectivo` |
+| Qr | `QR` |
+| Tarjeta | `Tarjeta` |
 
 ## Variante confirmada
 
 La variante asignada y confirmada es la A: descuento de combo del 10 %, Bs 2 por plato para llevar, envío gratuito desde Bs 150 únicamente en Cercado, pedido mínimo delivery de Bs 40 y chicharrón disponible solamente los domingos.
-

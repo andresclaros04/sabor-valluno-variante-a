@@ -66,11 +66,11 @@ class Producto(ABC):
     def contar_platos(self):
         """Devuelve cuántos platos contiene el producto."""
 
-    def contiene(self, producto_buscado):
+    def _contiene(self, producto_buscado):
         """Permite detectar ciclos sin preguntar por el tipo concreto."""
         return self is producto_buscado
 
-    def calcular_descuento(self):
+    def _calcular_descuento(self):
         """Los productos simples no aplican descuento."""
         return 0.0
 
@@ -155,35 +155,56 @@ class Bebida(Producto):
         return 0
 
 
+class ComboProducto:
+    """Clase asociativa entre un combo y cada producto que lo compone."""
+
+    def __init__(self, combo, producto):
+        self._combo = combo
+        self._producto = producto
+
+    @property
+    def combo(self):
+        return self._combo
+
+    @property
+    def producto(self):
+        return self._producto
+
+
 class Combo(Producto):
     """Producto compuesto con descuento del 10 % para la variante A."""
 
     DESCUENTO_VARIANTE_A = 0.10
 
     def __init__(self, nombre, productos):
+        self._descuento = self.DESCUENTO_VARIANTE_A
         self._productos = []
         productos_iniciales = list(productos)
         if len(productos_iniciales) < 2:
             raise ValueError("Un combo debe contener al menos dos productos")
         for producto in productos_iniciales:
             self._validar_producto(producto)
-            self._productos.append(producto)
+            self._productos.append(ComboProducto(self, producto))
 
         precio_inicial = self._calcular_precio_actual()
         super().__init__(nombre, precio_inicial)
 
     @property
     def productos(self):
-        # Se entrega una tupla para impedir modificaciones externas.
+        # La relación se mantiene encapsulada y se exponen los productos.
+        return tuple(relacion.producto for relacion in self._productos)
+
+    @property
+    def relaciones_productos(self):
         return tuple(self._productos)
 
     @property
     def descuento(self):
-        return self.DESCUENTO_VARIANTE_A
+        return self._descuento
 
     def _validar_producto(self, producto):
         try:
-            produce_ciclo = producto.contiene(self)
+            produce_ciclo = producto._contiene(self)
             producto.calcular_precio()
             producto.esta_disponible("lunes")
             producto.contar_platos()
@@ -193,35 +214,25 @@ class Combo(Producto):
             raise ValueError("Un combo no puede contenerse a sí mismo ni formar ciclos")
 
     def _calcular_precio_actual(self):
-        subtotal = sum(producto.calcular_precio() for producto in self._productos)
-        return round(subtotal * (1 - self.DESCUENTO_VARIANTE_A), 2)
+        subtotal = sum(producto.calcular_precio() for producto in self.productos)
+        return round(subtotal * (1 - self.descuento), 2)
 
     def calcular_descuento(self):
-        subtotal = sum(producto.calcular_precio() for producto in self._productos)
-        descuento_propio = round(subtotal * self.DESCUENTO_VARIANTE_A, 2)
+        subtotal = sum(producto.calcular_precio() for producto in self.productos)
+        descuento_propio = round(subtotal * self.descuento, 2)
         descuentos_internos = sum(
-            producto.calcular_descuento() for producto in self._productos
+            producto._calcular_descuento() for producto in self.productos
         )
         return round(descuento_propio + descuentos_internos, 2)
 
-    def agregar_producto(self, producto):
-        self._validar_producto(producto)
-        self._productos.append(producto)
-        self.precio = self._calcular_precio_actual()
+    def _calcular_descuento(self):
+        return self.calcular_descuento()
 
-    def quitar_producto(self, producto):
-        if producto not in self._productos:
-            raise ValueError("El producto no pertenece al combo")
-        if len(self._productos) <= 2:
-            raise ValueError("El combo debe conservar al menos dos productos")
-        self._productos.remove(producto)
-        self.precio = self._calcular_precio_actual()
-
-    def contiene(self, producto_buscado):
+    def _contiene(self, producto_buscado):
         if self is producto_buscado:
             return True
         return any(
-            producto.contiene(producto_buscado) for producto in self._productos
+            producto._contiene(producto_buscado) for producto in self.productos
         )
 
     def calcular_precio(self):
@@ -229,8 +240,8 @@ class Combo(Producto):
         return self.precio
 
     def esta_disponible(self, dia):
-        return all(producto.esta_disponible(dia) for producto in self._productos)
+        return all(producto.esta_disponible(dia) for producto in self.productos)
 
     def contar_platos(self):
-        return sum(producto.contar_platos() for producto in self._productos)
+        return sum(producto.contar_platos() for producto in self.productos)
 

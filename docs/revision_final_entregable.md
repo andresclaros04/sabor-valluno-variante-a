@@ -11,7 +11,7 @@ El proyecto está técnicamente completo para solicitar revisión del docente. C
 | Criterio | Estado | Evidencia |
 |---|---|---|
 | Diagrama v1 | Cumple | `docs/diagrama_v1.png` conserva el modelado realizado en aula |
-| Diagrama v2 | Cumple | `docs/diagrama_v2.png` y `docs/diagrama_v2.mmd` |
+| Diagrama v2 | Cumple | `docs/diagrama_v2.png`, fotografía definitiva proporcionada por el estudiante |
 | Cambios v1 a v2 | Cumple | `docs/cambios_v1_v2.md` |
 | Encapsulación | Cumple | Atributos protegidos, propiedades y validaciones en `modelo/` |
 | Herencia | Cumple | Tres jerarquías con nueve subclases concretas |
@@ -71,4 +71,3 @@ El mayor riesgo de calificación es no poder explicar o modificar el código. El
 5. Consultar con el docente el uso de IA registrado durante la fase restringida.
 6. Solicitar el visto bueno.
 7. Publicar el repositorio públicamente solo después del visto bueno.
-

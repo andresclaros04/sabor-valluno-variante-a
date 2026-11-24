@@ -10,7 +10,7 @@ Explicar:
 2. Cada jerarquía tiene tres subclases concretas.
 3. `Combo` hereda de `Producto` y contiene dos o más objetos `Producto`.
 4. `PedidoProducto` guarda un producto y su cantidad.
-5. `Restaurante` administra productos, clientes y pedidos.
+5. `restaurante.py` coordina productos, clientes y pedidos con funciones; no agrega una clase ausente del diagrama.
 6. Los cambios respecto al v1 están en `cambios_v1_v2.md`.
 
 ### Minutos 2 a 5 Fragmento de código
@@ -21,7 +21,7 @@ Prepararse para explicar:
 - Cómo funciona un `@property` y su setter.
 - Por qué `_items` y `_productos` no se entregan como listas modificables.
 - Cómo `Combo.calcular_precio()` llama a `calcular_precio()` de cada producto.
-- Cómo `PedidoParaLlevar` cuenta platos dentro de combos sin preguntar su tipo.
+- Cómo `ParaLlevar` cuenta platos dentro de combos sin preguntar su tipo.
 - Cómo cada método de pago implementa `procesar_pago()`.
 
 ### Minutos 5 a 9 Cambio en vivo
@@ -33,13 +33,13 @@ Prepararse para explicar:
 3. Implementar `calcular_precio()` sumando Bs 3 cuando corresponda.
 4. Implementar `esta_disponible()`.
 5. Implementar `contar_platos()` devolviendo 0.
-6. No modificar `Pedido`, `Combo` ni `PedidoParaLlevar`.
+6. No modificar `Pedido`, `Combo` ni `ParaLlevar`.
 
 El punto principal es demostrar que el polimorfismo permite añadir la clase sin cambiar los cálculos existentes.
 
 #### Si el docente pide Tiquipaya
 
-Agregar una entrada al diccionario `COSTOS_ENVIO` de `PedidoDelivery`:
+Agregar una entrada al diccionario `COSTOS_ENVIO` de `Delivery`:
 
 ```text
 "tiquipaya": 18.0
@@ -76,4 +76,3 @@ Caso de referencia de la variante A:
 ## Ensayo recomendado
 
 Ejecutar `demo.py` para presentar el caso de referencia, ejecutar `pruebas.py`, elegir tres clases al azar y explicarlas línea por línea. Luego realizar una vez cada posible cambio en vivo y restaurar el archivo mediante Git.
-

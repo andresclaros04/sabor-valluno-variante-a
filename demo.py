@@ -3,34 +3,34 @@
 from datetime import datetime
 
 from modelo.clientes import Cliente
-from modelo.pagos import PagoQR
-from modelo.pedidos import PedidoDelivery
+from modelo.pagos import QR
+from modelo.pedidos import Delivery
 from modelo.productos import Bebida, Combo, Plato
-from restaurante import Restaurante
+import restaurante as servicio
 
 
 def ejecutar_demo():
-    restaurante = Restaurante()
+    restaurante = servicio.crear_sistema()
 
     silpancho = Plato("Silpancho", 35)
     mocochinchi = Bebida("Mocochinchi", 6, "refresco natural", "vaso")
     combo = Combo("Combo silpancho", [silpancho, mocochinchi])
 
-    restaurante.registrar_producto(silpancho)
-    restaurante.registrar_producto(mocochinchi)
-    restaurante.registrar_producto(combo)
+    servicio.registrar_producto(restaurante, silpancho)
+    servicio.registrar_producto(restaurante, mocochinchi)
+    servicio.registrar_producto(restaurante, combo)
 
     cliente = Cliente("Cliente demostración", "71234567")
-    restaurante.registrar_cliente(cliente)
+    servicio.registrar_cliente(restaurante, cliente)
 
-    pedido = PedidoDelivery(
+    pedido = Delivery(
         1,
         cliente,
         "Quillacollo",
         datetime(2026, 11, 23, 12, 0),
     )
     pedido.agregar_producto(combo, 2)
-    restaurante.registrar_pedido(pedido)
+    servicio.registrar_pedido(restaurante, pedido)
 
     detalle = pedido.detalle()
     print("=== CASO DE REFERENCIA VARIANTE A ===")
@@ -41,12 +41,12 @@ def ejecutar_demo():
     print(f"Envío a Quillacollo: Bs {detalle['cargos']:.2f}")
     print(f"Total: Bs {detalle['total']:.2f}")
 
-    comprobante = pedido.cobrar(PagoQR("1234567890"))
+    comprobante = pedido.cobrar(QR("1234567890"))
     print("\n=== COMPROBANTE ===")
     for clave, valor in comprobante.items():
         print(f"{clave}: {valor}")
 
-    reporte = restaurante.reporte_ventas(pedido.fecha_registro.date())
+    reporte = servicio.reporte_ventas(restaurante, pedido.fecha_registro.date())
     print("\n=== REPORTE ===")
     print(f"Pedidos delivery: {reporte['cantidad_por_tipo']['DELIVERY']}")
     print(f"Total de ventas: Bs {reporte['total_general']:.2f}")

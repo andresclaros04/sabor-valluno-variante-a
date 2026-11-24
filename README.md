@@ -85,7 +85,7 @@ python pruebas.py
 Resultado esperado:
 
 ```text
-Todas las pruebas superadas
+Todas las pruebas superadas: 12 casos
 ```
 
 Antes de entregar también puede ejecutarse:
@@ -117,15 +117,14 @@ El script se negará a generar el ZIP si el acta vuelve a contener campos marcad
 - Polimorfismo para precios, disponibilidad, conteo de platos, cargos y pagos.
 - Abstracción mediante `ABC` y `@abstractmethod`.
 - Composición de `Combo` con productos y de `Pedido` con `PedidoProducto`.
-- Agregación de productos, clientes y pedidos en `Restaurante`.
+- Coordinación de productos, clientes y pedidos mediante funciones de aplicación, sin agregar clases al diagrama.
 
 ## Decisión sobre retraso de delivery
 
-El docente decidió no tomar en cuenta el tiempo de demora ni la compensación de delivery. La decisión está registrada en `docs/acta_consultas.md`, por lo que `PedidoDelivery` no contiene cálculos de penalización por tiempo.
+El docente decidió no tomar en cuenta el tiempo de demora ni la compensación de delivery. La decisión está registrada en `docs/acta_consultas.md`, por lo que `Delivery` no contiene cálculos de penalización por tiempo.
 
 El sistema utiliza únicamente la biblioteca estándar de Python durante su ejecución.
 
 ## Persistencia opcional
 
 Las opciones 11 y 12 del menú guardan y cargan el estado en `datos.json`. El archivo conserva productos simples, combos anidados, clientes, pedidos, cantidades, estados y pagos.
-

@@ -29,7 +29,7 @@
 ## Documentación
 
 - [x] Diagrama v1 conservado.
-- [x] Diagrama v2 generado.
+- [x] Diagrama v2 conservado exactamente desde la fotografía final.
 - [x] Cambios del v1 al v2 explicados.
 - [x] Bitácora de IA iniciada.
 - [x] Registro personal de IA creado.
@@ -49,4 +49,3 @@
 - [ ] Subir el repositorio a GitHub.
 - [ ] Verificar el enlace de GitHub siguiendo `docs/guia_github.md`.
 - [ ] Practicar la defensa sin consultar el código generado por IA.
-

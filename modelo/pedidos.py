@@ -20,7 +20,6 @@ def validar_producto(producto):
     try:
         producto.nombre
         producto.calcular_precio
-        producto.calcular_descuento
         producto.esta_disponible
         producto.contar_platos
     except AttributeError as error:
@@ -58,8 +57,8 @@ class PedidoProducto:
     def calcular_subtotal(self):
         return round(self.producto.calcular_precio() * self.cantidad, 2)
 
-    def calcular_descuento(self):
-        return round(self.producto.calcular_descuento() * self.cantidad, 2)
+    def _calcular_descuento(self):
+        return round(self.producto._calcular_descuento() * self.cantidad, 2)
 
     def contar_platos(self):
         return self.producto.contar_platos() * self.cantidad
@@ -100,7 +99,7 @@ class Pedido(ABC):
         self._fecha_registro = fecha_registro or datetime.now()
         self._estado = self.REGISTRADO
         self._items = []
-        self._metodo_pago = None
+        self._pago = None
         self._comprobante = None
 
     @property
@@ -128,8 +127,8 @@ class Pedido(ABC):
         return tuple(self._items)
 
     @property
-    def metodo_pago(self):
-        return self._metodo_pago
+    def pago(self):
+        return self._pago
 
     @property
     def comprobante(self):
@@ -155,14 +154,16 @@ class Pedido(ABC):
     def agregar_producto(self, producto, cantidad=1):
         self._validar_modificable()
         validar_producto(producto)
+        # Valida la cantidad incluso cuando el producto ya estaba agregado.
+        cantidad_validada = PedidoProducto(producto, cantidad).cantidad
         if not producto.esta_disponible(self.dia):
             raise ValueError(f"{producto.nombre} no está disponible el {self.dia}")
 
         for item in self._items:
             if item.producto is producto:
-                item.cantidad = item.cantidad + cantidad
+                item.cantidad = item.cantidad + cantidad_validada
                 return
-        self._items.append(PedidoProducto(producto, cantidad))
+        self._items.append(PedidoProducto(producto, cantidad_validada))
 
     def quitar_producto(self, producto):
         self._validar_modificable()
@@ -175,11 +176,11 @@ class Pedido(ABC):
     def calcular_subtotal(self):
         return round(sum(item.calcular_subtotal() for item in self._items), 2)
 
-    def calcular_descuentos(self):
-        return round(sum(item.calcular_descuento() for item in self._items), 2)
+    def _calcular_descuentos(self):
+        return round(sum(item._calcular_descuento() for item in self._items), 2)
 
-    def calcular_subtotal_bruto(self):
-        return round(self.calcular_subtotal() + self.calcular_descuentos(), 2)
+    def _calcular_subtotal_bruto(self):
+        return round(self.calcular_subtotal() + self._calcular_descuentos(), 2)
 
     @abstractmethod
     def calcular_cargos(self):
@@ -195,24 +196,34 @@ class Pedido(ABC):
             raise ValueError(
                 f"No se puede cambiar de {self.estado} a {nuevo_estado}"
             )
+        if nuevo_estado == self.EN_PREPARACION:
+            if not self._items:
+                raise ValueError("Un pedido sin productos no puede prepararse")
+            self.validar_inicio_preparacion()
         self._estado = nuevo_estado
 
+    def validar_inicio_preparacion(self):
+        """Punto polimórfico para reglas previas a la preparación."""
+        return True
+
     def cancelar(self):
+        if self.pago is not None:
+            raise ValueError("No se puede cancelar un pedido ya pagado")
         self.cambiar_estado(self.CANCELADO)
 
-    def cobrar(self, metodo_pago):
+    def cobrar(self, pago):
         if not self._items:
             raise ValueError("No se puede cobrar un pedido sin productos")
         if self.estado == self.CANCELADO:
             raise ValueError("No se puede cobrar un pedido cancelado")
-        if self.metodo_pago is not None:
+        if self.pago is not None:
             raise ValueError("El pedido ya fue pagado")
         try:
-            comprobante = metodo_pago.procesar_pago(self.calcular_total())
+            comprobante = pago.procesar_pago(self.calcular_total())
         except AttributeError as error:
             raise TypeError("El objeto no cumple el contrato de MetodoPago") from error
         self._comprobante = comprobante
-        self._metodo_pago = metodo_pago
+        self._pago = pago
         return dict(self._comprobante)
 
     def detalle(self):
@@ -229,15 +240,15 @@ class Pedido(ABC):
                 }
                 for item in self._items
             ],
-            "subtotal_bruto": self.calcular_subtotal_bruto(),
-            "descuentos": self.calcular_descuentos(),
+            "subtotal_bruto": self._calcular_subtotal_bruto(),
+            "descuentos": self._calcular_descuentos(),
             "subtotal": self.calcular_subtotal(),
             "cargos": self.calcular_cargos(),
             "total": self.calcular_total(),
         }
 
 
-class PedidoLocal(Pedido):
+class Local(Pedido):
     def __init__(self, numero_pedido, cliente, mesa, fecha_registro=None):
         super().__init__(numero_pedido, cliente, fecha_registro)
         self.mesa = mesa
@@ -270,7 +281,7 @@ class PedidoLocal(Pedido):
         return 0.0
 
 
-class PedidoParaLlevar(Pedido):
+class ParaLlevar(Pedido):
     COSTO_ENVASE_POR_PLATO = 2.0
 
     def __init__(self, numero_pedido, cliente, fecha_registro=None):
@@ -290,7 +301,7 @@ class PedidoParaLlevar(Pedido):
         return round(cantidad_platos * self.costo_envase_por_plato, 2)
 
 
-class PedidoDelivery(Pedido):
+class Delivery(Pedido):
     COSTOS_ENVIO = {
         "cercado": 8.0,
         "quillacollo": 15.0,
@@ -302,6 +313,8 @@ class PedidoDelivery(Pedido):
 
     def __init__(self, numero_pedido, cliente, zona, fecha_registro=None):
         super().__init__(numero_pedido, cliente, fecha_registro)
+        self._pedido_minimo = self.PEDIDO_MINIMO
+        self._envio_gratis_desde = self.ENVIO_GRATIS_CERCADO_DESDE
         self.zona = zona
 
     @property
@@ -319,25 +332,36 @@ class PedidoDelivery(Pedido):
             raise ValueError("La zona de delivery no está registrada")
         self._zona = zona
 
+    @property
+    def pedido_minimo(self):
+        return self._pedido_minimo
+
+    @property
+    def envio_gratis_desde(self):
+        return self._envio_gratis_desde
+
     def calcular_cargos(self):
         if (
             self.zona == "cercado"
-            and self.calcular_subtotal() >= self.ENVIO_GRATIS_CERCADO_DESDE
+            and self.calcular_subtotal() >= self.envio_gratis_desde
         ):
             return 0.0
         return self.COSTOS_ENVIO[self.zona]
 
     def validar_pedido_minimo(self):
-        if self.calcular_subtotal() < self.PEDIDO_MINIMO:
+        if self.calcular_subtotal() < self.pedido_minimo:
             raise ValueError(
-                f"El pedido mínimo para delivery es Bs {self.PEDIDO_MINIMO:.2f}"
+                f"El pedido mínimo para delivery es Bs {self.pedido_minimo:.2f}"
             )
         return True
 
-    def cobrar(self, metodo_pago):
+    def validar_inicio_preparacion(self):
+        return self.validar_pedido_minimo()
+
+    def cobrar(self, pago):
         self.validar_pedido_minimo()
-        if not metodo_pago.permite_delivery:
+        if not pago.permite_delivery:
             raise ValueError("Delivery solo acepta efectivo o QR")
-        return super().cobrar(metodo_pago)
+        return super().cobrar(pago)
 
 

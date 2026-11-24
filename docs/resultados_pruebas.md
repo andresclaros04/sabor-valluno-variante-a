@@ -9,32 +9,20 @@ python pruebas.py
 Resultado verificado:
 
 ```text
-Todas las pruebas superadas
+Todas las pruebas superadas: 12 casos
 ```
 
 ## Casos cubiertos
 
-1. No se puede instanciar directamente la clase abstracta `Producto`.
-2. Un producto no acepta precio igual o menor que cero.
-3. El chicharrón de la variante A solo está disponible el domingo.
-4. Una jarra cuesta tres veces el precio del vaso.
-5. El combo de silpancho Bs 35 y mocochinchi Bs 6 cuesta Bs 36,90.
-6. Un combo puede contener otro combo y contar recursivamente sus platos.
-7. Un combo no puede contenerse a sí mismo.
-8. El teléfono debe tener ocho dígitos y comenzar con 6 o 7.
-9. Dos combos para llevar cobran cuatro bolivianos por dos platos en total.
-10. Un pedido deja de aceptar productos cuando sale de `REGISTRADO`.
-11. Una transición de estado inválida produce una excepción.
-12. Dos combos por delivery a Quillacollo totalizan Bs 88,80.
-13. Delivery acepta QR y rechaza tarjeta.
-14. Efectivo calcula correctamente el cambio.
-15. Tarjeta agrega una comisión del 3 %.
-16. Cercado tiene envío gratis desde Bs 150 de subtotal.
-17. Delivery rechaza pedidos menores a Bs 40 al intentar cobrarlos.
-18. Una mesa con pedido abierto no queda disponible.
-19. El reporte agrupa ventas por tipo de pedido.
-20. El reporte obtiene los productos más vendidos.
-21. Un pedido ya pagado no puede cobrarse por segunda vez.
-22. El guardado y carga JSON conserva productos, clientes, pedidos y pagos.
-23. Un pedido recuperado desde JSON mantiene el total de Bs 88,80.
-
+1. Las tres clases madre (`Producto`, `Pedido` y `MetodoPago`) son abstractas.
+2. Chicharrón solo está disponible el domingo y los precios son positivos.
+3. La jarra cuesta tres veces el vaso.
+4. `ComboProducto` relaciona realmente cada combo con sus productos.
+5. Un combo anidado cuenta platos y envases de forma recursiva.
+6. El caso de referencia de Quillacollo totaliza Bs 88,80.
+7. Las cantidades y transiciones de estado inválidas se rechazan.
+8. Delivery valida mínimo, zona, envío gratis y restricción de tarjeta.
+9. Efectivo, QR y Tarjeta aplican sus reglas propias.
+10. Una mesa no admite dos pedidos abiertos.
+11. El reporte diario agrupa ventas y obtiene los tres más vendidos.
+12. JSON conserva un pedido pagado que contiene un combo anidado.

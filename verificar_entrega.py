@@ -37,12 +37,11 @@ def verificar_archivos():
 
 
 def ejecutar_pruebas():
-    pruebas.probar_productos()
-    pruebas.probar_clientes_y_pedidos()
-    pruebas.probar_delivery_y_pagos()
-    pruebas.probar_restaurante()
-    pruebas.probar_persistencia_json()
-    print("[OK] Pruebas funcionales")
+    if len(pruebas.PRUEBAS) < 8:
+        raise AssertionError("La consigna exige al menos 8 casos de prueba")
+    for prueba in pruebas.PRUEBAS:
+        prueba()
+    print(f"[OK] {len(pruebas.PRUEBAS)} pruebas funcionales")
 
 
 def revisar_pendientes_documentales():

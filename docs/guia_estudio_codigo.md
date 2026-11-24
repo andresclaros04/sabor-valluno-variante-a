@@ -86,13 +86,13 @@ Esta clase explica por qué `cantidad` salió de `Producto` al pasar del diagram
 
 Ejercicio: intentar pasar directamente de `REGISTRADO` a `ENTREGADO`.
 
-### PedidoLocal
+### Local
 
 - Guarda una mesa entre 1 y 15.
 - No agrega cargos.
-- `Restaurante` impide dos pedidos abiertos en la misma mesa.
+- La función `mesa_disponible()` impide dos pedidos abiertos en la misma mesa.
 
-### PedidoParaLlevar
+### ParaLlevar
 
 - Cobra Bs 2 por cada plato.
 - No pregunta si el producto es plato o combo.
@@ -100,7 +100,7 @@ Ejercicio: intentar pasar directamente de `REGISTRADO` a `ENTREGADO`.
 
 Ejercicio: calcular los envases de dos combos que contienen un plato cada uno.
 
-### PedidoDelivery
+### Delivery
 
 - Valida Cercado, Quillacollo, Sacaba y Vinto.
 - Aplica pedido mínimo de Bs 40.
@@ -113,13 +113,13 @@ Ejercicio: calcular los envases de dos combos que contienen un plato cada uno.
 Archivo: `modelo/pagos.py`.
 
 - `MetodoPago` declara el contrato `procesar_pago()`.
-- `PagoEfectivo` comprueba el monto y calcula cambio.
-- `PagoQR` exige diez dígitos.
-- `PagoTarjeta` agrega 3 % y declara que no permite delivery.
+- `Efectivo` comprueba el monto y calcula cambio.
+- `QR` exige diez dígitos.
+- `Tarjeta` agrega 3 % y declara que no permite delivery.
 
 Ejercicio: explicar cómo delivery rechaza tarjeta sin preguntar si el objeto es una tarjeta.
 
-## 7 Estudiar Restaurante
+## 7 Estudiar las funciones de aplicación
 
 Archivo: `restaurante.py`.
 
@@ -129,7 +129,7 @@ Archivo: `restaurante.py`.
 - Genera el reporte de ventas.
 - Obtiene los tres productos más vendidos.
 
-La clase gestora coordina objetos, pero no contiene los cálculos específicos de cada subclase.
+El módulo `restaurante.py` coordina objetos mediante funciones, pero no agrega una clase al modelo ni contiene los cálculos específicos de cada subclase.
 
 ## 8 Estudiar el menú
 
@@ -170,4 +170,3 @@ No memorizar los resultados. Para cada `assert`, responder:
 6. Restaurar el cambio con Git.
 
 No marcar “Sí” en el registro de IA hasta poder realizar estos pasos sin ayuda.
-

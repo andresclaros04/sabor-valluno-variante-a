@@ -6,7 +6,7 @@
 - Diagrama v1: guardado en el formato requerido como `docs/diagrama_v1.png`; la fotografía JPG original también se conserva.
 - Variante asignada: A.
 - Regla de retraso y compensación: excluida del proyecto por decisión del docente registrada el 23/11/2026.
-- Código: jerarquías principales, clase gestora, menú de consola y pruebas implementados.
+- Código: jerarquías del diagrama en papel, menú de consola y pruebas implementados.
 
 ## Semana 2 Productos y encapsulación
 
@@ -32,19 +32,19 @@ Commits sugeridos:
 
 1. Implementar `Cliente` y validar el teléfono.
 2. Crear la clase abstracta `Pedido`.
-3. Implementar `PedidoLocal`, `PedidoParaLlevar` y `PedidoDelivery`.
+3. Implementar `Local`, `ParaLlevar` y `Delivery`.
 4. Implementar estados y transiciones válidas.
 5. Permitir modificar productos solamente en estado `REGISTRADO`.
 6. Calcular subtotal, cargos y total sin condicionales por tipo de producto.
 7. Crear la clase abstracta `MetodoPago`.
-8. Implementar `PagoEfectivo`, `PagoQR` y `PagoTarjeta`.
+8. Implementar `Efectivo`, `QR` y `Tarjeta`.
 9. Restringir tarjeta para pedidos delivery.
 10. Mantener registrada en el acta la decisión de no implementar retraso ni compensación.
 11. Realizar al menos cuatro commits adicionales.
 
 ## Semana 4 Integración y defensa
 
-1. Crear la clase gestora `Restaurante`.
+1. Crear funciones de aplicación para coordinar listas, búsquedas y reportes sin añadir clases al modelo aprobado.
 2. Crear el menú de consola en `main.py`.
 3. Registrar productos, combos, clientes y pedidos.
 4. Mostrar detalle del pedido con subtotal, descuentos, cargos y total.
@@ -88,4 +88,3 @@ sabor_valluno/
 - Consultar con el docente cómo registrar el uso de IA durante la fase indicada como “sin IA”.
 - Practicar la defensa y los dos posibles cambios en vivo.
 - Publicar en GitHub después de recibir el visto bueno.
-

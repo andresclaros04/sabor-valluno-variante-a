@@ -90,3 +90,14 @@ Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo
 - Archivo o clase: `docs/diagrama_v2_propuesta_minima.png`, `docs/diagrama_v2_propuesta_minima.mmd`, `docs/reporte_propuesta_cambios_minimos.md`
 - ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
 
+## Registro 8
+
+- Fecha: 24/11/2026
+- Herramienta: ChatGPT Codex
+- Tipo de uso: adaptación del código al diagrama definitivo
+- Consulta textual: "usa ese modelo tal cual, no hagas mas nada, usalo para hacer el codigo"
+- Qué se aceptó: utilizar la última fotografía como único diagrama v2 y no agregar clases ni relaciones
+- Qué se modificó y por qué: se reemplazó el v2 digital por la fotografía, se retiraron las propuestas redundantes, se adaptaron los nombres y relaciones del código, se implementó `ComboProducto`, se trasladó la gestión general a funciones y se añadieron doce pruebas.
+- Archivo o clase: `docs/diagrama_v2.png`, `modelo/`, `restaurante.py`, `main.py`, `persistencia.py`, `pruebas.py`, documentación
+- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
+

@@ -1,22 +1,15 @@
-"""Casos de prueba del sistema Sabor Valluno.
-
-Se ejecutan con: python pruebas.py
-"""
+"""Pruebas ejecutables del sistema Sabor Valluno: ``python pruebas.py``."""
 
 from datetime import datetime
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from modelo.clientes import Cliente
-from modelo.pagos import PagoEfectivo, PagoQR, PagoTarjeta
-from modelo.pedidos import (
-    PedidoDelivery,
-    PedidoLocal,
-    PedidoParaLlevar,
-)
-from modelo.productos import Bebida, Combo, Plato, Producto
-from restaurante import Restaurante
+from modelo.pagos import Efectivo, MetodoPago, QR, Tarjeta
+from modelo.pedidos import Delivery, Local, ParaLlevar, Pedido
+from modelo.productos import Bebida, Combo, ComboProducto, Plato, Producto
 from persistencia import cargar_json, guardar_json
+import restaurante as servicio
 
 
 def verificar_excepcion(tipo_excepcion, funcion):
@@ -24,170 +17,187 @@ def verificar_excepcion(tipo_excepcion, funcion):
         funcion()
     except tipo_excepcion:
         return
-    raise AssertionError(f"Se esperaba la excepción {tipo_excepcion.__name__}")
-
-
-def probar_productos():
-    verificar_excepcion(TypeError, lambda: Producto("Genérico", 10))
-    verificar_excepcion(ValueError, lambda: Plato("Silpancho", 0))
-
-    silpancho = Plato("Silpancho", 35)
-    chicharron = Plato("Chicharrón", 45)
-    mocochinchi = Bebida("Mocochinchi", 6, "refresco natural", "vaso")
-
-    assert silpancho.esta_disponible("lunes")
-    assert not chicharron.esta_disponible("sábado")
-    assert chicharron.esta_disponible("domingo")
-    assert silpancho.contar_platos() == 1
-
-    assert mocochinchi.calcular_precio() == 6
-    mocochinchi.presentacion = "jarra"
-    assert mocochinchi.calcular_precio() == 18
-    assert mocochinchi.contar_platos() == 0
-    mocochinchi.presentacion = "vaso"
-
-    combo = Combo("Combo valluno", [silpancho, mocochinchi])
-    assert combo.calcular_precio() == 36.90
-    assert combo.calcular_descuento() == 4.10
-    assert combo.contar_platos() == 1
-
-    combo_doble = Combo("Combo doble", [combo, silpancho])
-    assert combo_doble.contar_platos() == 2
-    assert combo_doble.esta_disponible("lunes")
-
-    verificar_excepcion(ValueError, lambda: combo.agregar_producto(combo))
+    raise AssertionError(f"Se esperaba {tipo_excepcion.__name__}")
 
 
 def crear_productos_referencia():
-    silpancho = Plato("Silpancho", 35)
-    mocochinchi = Bebida("Mocochinchi", 6, "refresco natural", "vaso")
-    combo = Combo("Combo silpancho", [silpancho, mocochinchi])
-    return silpancho, mocochinchi, combo
+    plato = Plato("Silpancho", 35)
+    bebida = Bebida("Mocochinchi", 6, "refresco natural", "vaso")
+    combo = Combo("Combo silpancho", [plato, bebida])
+    return plato, bebida, combo
 
 
-def probar_clientes_y_pedidos():
-    verificar_excepcion(ValueError, lambda: Cliente("Ana", "51234567"))
+def probar_clases_abstractas():
     cliente = Cliente("Ana", "71234567")
-    silpancho, _, combo = crear_productos_referencia()
+    verificar_excepcion(TypeError, lambda: Producto("Genérico", 10))
+    verificar_excepcion(TypeError, lambda: Pedido(1, cliente))
+    verificar_excepcion(TypeError, MetodoPago)
 
-    pedido_llevar = PedidoParaLlevar(
-        1, cliente, datetime(2026, 11, 23, 12, 0)
+
+def probar_plato_y_chicharron():
+    verificar_excepcion(ValueError, lambda: Plato("Silpancho", 0))
+    chicharron = Plato("Chicharrón", 45)
+    assert not chicharron.esta_disponible("sábado")
+    assert chicharron.esta_disponible("domingo")
+    assert chicharron.contar_platos() == 1
+
+
+def probar_bebida_vaso_y_jarra():
+    bebida = Bebida("Mocochinchi", 6, "natural", "vaso")
+    assert bebida.calcular_precio() == 6
+    bebida.presentacion = "jarra"
+    assert bebida.calcular_precio() == 18
+    assert bebida.contar_platos() == 0
+
+
+def probar_combo_y_clase_asociativa():
+    plato, bebida, combo = crear_productos_referencia()
+    assert combo.calcular_precio() == 36.90
+    assert combo.calcular_descuento() == 4.10
+    assert combo.contar_platos() == 1
+    assert len(combo.relaciones_productos) == 2
+    assert all(isinstance(item, ComboProducto) for item in combo.relaciones_productos)
+    assert combo.relaciones_productos[0].combo is combo
+    assert combo.productos == (plato, bebida)
+
+
+def probar_combo_anidado_y_envases():
+    plato, _, combo = crear_productos_referencia()
+    anidado = Combo("Combo doble", [combo, plato])
+    assert anidado.contar_platos() == 2
+    pedido = ParaLlevar(1, Cliente("Ana", "71234567"))
+    pedido.agregar_producto(anidado, 2)
+    assert pedido.calcular_cargos() == 8.0
+
+
+def probar_caso_referencia_88_80():
+    _, _, combo = crear_productos_referencia()
+    pedido = Delivery(
+        1, Cliente("Luis", "61234567"), "Quillacollo",
+        datetime(2026, 11, 23, 12, 0),
     )
-    pedido_llevar.agregar_producto(combo, 2)
-    assert pedido_llevar.calcular_subtotal() == 73.80
-    assert pedido_llevar.calcular_cargos() == 4.0
-    assert pedido_llevar.calcular_total() == 77.80
-
-    pedido_local = PedidoLocal(2, cliente, 5)
-    pedido_local.agregar_producto(silpancho, 1)
-    pedido_local.cambiar_estado(pedido_local.EN_PREPARACION)
-    verificar_excepcion(
-        ValueError, lambda: pedido_local.agregar_producto(silpancho, 1)
-    )
-    verificar_excepcion(
-        ValueError, lambda: pedido_local.cambiar_estado(pedido_local.ENTREGADO)
-    )
-
-
-def probar_delivery_y_pagos():
-    cliente = Cliente("Luis", "61234567")
-    silpancho, _, combo = crear_productos_referencia()
-
-    # Caso de referencia de la variante A.
-    delivery = PedidoDelivery(
-        3, cliente, "Quillacollo", datetime(2026, 11, 23, 12, 0)
-    )
-    delivery.agregar_producto(combo, 2)
-    assert delivery.calcular_subtotal() == 73.80
-    assert delivery.calcular_subtotal_bruto() == 82.00
-    assert delivery.calcular_descuentos() == 8.20
-    assert delivery.calcular_cargos() == 15.0
-    assert delivery.calcular_total() == 88.80
-
-    comprobante_qr = delivery.cobrar(PagoQR("1234567890"))
-    assert comprobante_qr["total"] == 88.80
-    verificar_excepcion(
-        ValueError, lambda: delivery.cobrar(PagoTarjeta())
-    )
-
-    pedido_local = PedidoLocal(4, cliente, 3)
-    pedido_local.agregar_producto(silpancho, 1)
-    comprobante_efectivo = pedido_local.cobrar(PagoEfectivo(40))
-    assert comprobante_efectivo["cambio"] == 5.0
-    verificar_excepcion(
-        ValueError, lambda: pedido_local.cobrar(PagoEfectivo(40))
-    )
-
-    pedido_tarjeta = PedidoLocal(5, cliente, 4)
-    pedido_tarjeta.agregar_producto(silpancho, 1)
-    comprobante_tarjeta = pedido_tarjeta.cobrar(PagoTarjeta())
-    assert comprobante_tarjeta["comision"] == 1.05
-    assert comprobante_tarjeta["total"] == 36.05
-
-    delivery_gratis = PedidoDelivery(6, cliente, "Cercado")
-    delivery_gratis.agregar_producto(silpancho, 5)
-    assert delivery_gratis.calcular_cargos() == 0.0
-
-    delivery_pequeno = PedidoDelivery(7, cliente, "Cercado")
-    delivery_pequeno.agregar_producto(silpancho, 1)
-    verificar_excepcion(
-        ValueError, lambda: delivery_pequeno.cobrar(PagoQR("0987654321"))
-    )
-
-
-def probar_restaurante():
-    restaurante = Restaurante()
-    cliente = Cliente("Rosa", "72345678")
-    silpancho, mocochinchi, combo = crear_productos_referencia()
-
-    restaurante.registrar_cliente(cliente)
-    restaurante.registrar_producto(silpancho)
-    restaurante.registrar_producto(mocochinchi)
-    restaurante.registrar_producto(combo)
-
-    pedido = PedidoLocal(1, cliente, 1)
     pedido.agregar_producto(combo, 2)
-    pedido.cobrar(PagoEfectivo(100))
-    restaurante.registrar_pedido(pedido)
+    assert pedido.detalle()["subtotal_bruto"] == 82.00
+    assert pedido.detalle()["descuentos"] == 8.20
+    assert pedido.calcular_subtotal() == 73.80
+    assert pedido.calcular_cargos() == 15.0
+    assert pedido.calcular_total() == 88.80
 
-    assert not restaurante.mesa_disponible(1)
-    assert restaurante.productos_mas_vendidos() == [("Combo silpancho", 2)]
-    reporte = restaurante.reporte_ventas(pedido.fecha_registro.date())
+
+def probar_cantidades_y_estados():
+    plato, _, _ = crear_productos_referencia()
+    pedido = Local(1, Cliente("Rosa", "72345678"), 5)
+    verificar_excepcion(ValueError, lambda: pedido.cambiar_estado(Pedido.EN_PREPARACION))
+    pedido.agregar_producto(plato, 1)
+    verificar_excepcion(ValueError, lambda: pedido.agregar_producto(plato, -1))
+    assert pedido.items[0].cantidad == 1
+    pedido.cambiar_estado(Pedido.EN_PREPARACION)
+    verificar_excepcion(ValueError, lambda: pedido.agregar_producto(plato, 1))
+    verificar_excepcion(ValueError, lambda: pedido.cambiar_estado(Pedido.ENTREGADO))
+
+
+def probar_reglas_delivery():
+    plato, _, _ = crear_productos_referencia()
+    cliente = Cliente("Eva", "73456789")
+    pequeno = Delivery(1, cliente, "Cercado")
+    pequeno.agregar_producto(plato, 1)
+    verificar_excepcion(ValueError, lambda: pequeno.cambiar_estado(Pedido.EN_PREPARACION))
+    verificar_excepcion(ValueError, lambda: pequeno.cobrar(QR("0987654321")))
+    gratis = Delivery(2, cliente, "Cercado")
+    gratis.agregar_producto(plato, 5)
+    assert gratis.calcular_cargos() == 0.0
+    verificar_excepcion(ValueError, lambda: gratis.cobrar(Tarjeta()))
+
+
+def probar_metodos_pago():
+    plato, _, _ = crear_productos_referencia()
+    cliente = Cliente("Mario", "74567890")
+    efectivo = Local(1, cliente, 1)
+    efectivo.agregar_producto(plato)
+    comprobante = efectivo.cobrar(Efectivo(40))
+    assert comprobante["cambio"] == 5.0
+    verificar_excepcion(ValueError, efectivo.cancelar)
+    verificar_excepcion(ValueError, lambda: efectivo.cobrar(Efectivo(40)))
+    tarjeta = Local(2, cliente, 2)
+    tarjeta.agregar_producto(plato)
+    comprobante = tarjeta.cobrar(Tarjeta())
+    assert comprobante["comision"] == 1.05
+    assert comprobante["total"] == 36.05
+    verificar_excepcion(ValueError, lambda: QR("123"))
+
+
+def probar_ocupacion_de_mesas():
+    restaurante = servicio.crear_sistema()
+    cliente = Cliente("Sonia", "75678901")
+    servicio.registrar_cliente(restaurante, cliente)
+    servicio.registrar_pedido(restaurante, Local(1, cliente, 3))
+    assert not servicio.mesa_disponible(restaurante, 3)
+    verificar_excepcion(
+        ValueError,
+        lambda: servicio.registrar_pedido(restaurante, Local(2, cliente, 3)),
+    )
+
+
+def probar_reporte_diario():
+    restaurante = servicio.crear_sistema()
+    cliente = Cliente("Nora", "76789012")
+    plato, bebida, combo = crear_productos_referencia()
+    for producto in (plato, bebida, combo):
+        servicio.registrar_producto(restaurante, producto)
+    servicio.registrar_cliente(restaurante, cliente)
+    pedido = Local(1, cliente, 1)
+    pedido.agregar_producto(combo, 2)
+    pedido.cobrar(Efectivo(100))
+    servicio.registrar_pedido(restaurante, pedido)
+    reporte = servicio.reporte_ventas(restaurante, pedido.fecha_registro.date())
     assert reporte["cantidad_por_tipo"]["LOCAL"] == 1
     assert reporte["total_general"] == 73.80
+    assert reporte["productos_mas_vendidos"] == [("Combo silpancho", 2)]
 
 
-def probar_persistencia_json():
-    restaurante = Restaurante()
-    cliente = Cliente("Mario", "73456789")
-    silpancho, mocochinchi, combo = crear_productos_referencia()
-    restaurante.registrar_cliente(cliente)
-    restaurante.registrar_producto(silpancho)
-    restaurante.registrar_producto(mocochinchi)
-    restaurante.registrar_producto(combo)
-
-    pedido = PedidoDelivery(1, cliente, "Quillacollo")
-    pedido.agregar_producto(combo, 2)
-    pedido.cobrar(PagoQR("1122334455"))
-    restaurante.registrar_pedido(pedido)
-
-    with TemporaryDirectory() as carpeta_temporal:
-        ruta = Path(carpeta_temporal) / "datos.json"
+def probar_persistencia_json_con_combo_anidado():
+    restaurante = servicio.crear_sistema()
+    cliente = Cliente("Pablo", "77890123")
+    plato, bebida, combo = crear_productos_referencia()
+    anidado = Combo("Combo familiar", [combo, plato])
+    for producto in (plato, bebida, combo, anidado):
+        servicio.registrar_producto(restaurante, producto)
+    servicio.registrar_cliente(restaurante, cliente)
+    pedido = Delivery(1, cliente, "Quillacollo")
+    pedido.agregar_producto(anidado)
+    pedido.cobrar(QR("1122334455"))
+    servicio.registrar_pedido(restaurante, pedido)
+    with TemporaryDirectory() as carpeta:
+        ruta = Path(carpeta) / "datos.json"
         guardar_json(restaurante, ruta)
-        restaurante_cargado = cargar_json(ruta)
+        cargado = cargar_json(ruta)
+    assert len(cargado["productos"]) == 4
+    assert cargado["pedidos"][0].pago.nombre == "QR"
+    assert cargado["pedidos"][0].items[0].producto.contar_platos() == 2
 
-    assert len(restaurante_cargado.productos) == 3
-    assert len(restaurante_cargado.clientes) == 1
-    assert len(restaurante_cargado.pedidos) == 1
-    pedido_cargado = restaurante_cargado.pedidos[0]
-    assert pedido_cargado.calcular_total() == 88.80
-    assert pedido_cargado.metodo_pago.nombre == "QR"
+
+PRUEBAS = (
+    probar_clases_abstractas,
+    probar_plato_y_chicharron,
+    probar_bebida_vaso_y_jarra,
+    probar_combo_y_clase_asociativa,
+    probar_combo_anidado_y_envases,
+    probar_caso_referencia_88_80,
+    probar_cantidades_y_estados,
+    probar_reglas_delivery,
+    probar_metodos_pago,
+    probar_ocupacion_de_mesas,
+    probar_reporte_diario,
+    probar_persistencia_json_con_combo_anidado,
+)
+
+
+def ejecutar_todas():
+    for prueba in PRUEBAS:
+        prueba()
+        print(f"[OK] {prueba.__name__}")
+    print(f"Todas las pruebas superadas: {len(PRUEBAS)} casos")
 
 
 if __name__ == "__main__":
-    probar_productos()
-    probar_clientes_y_pedidos()
-    probar_delivery_y_pagos()
-    probar_restaurante()
-    probar_persistencia_json()
-    print("Todas las pruebas superadas")
+    ejecutar_todas()

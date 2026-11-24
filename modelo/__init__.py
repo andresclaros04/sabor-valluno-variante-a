@@ -1,13 +1,13 @@
 """Clases del modelo del sistema Sabor Valluno."""
 
-from modelo.productos import Bebida, Combo, Plato, Producto
+from modelo.productos import Bebida, Combo, ComboProducto, Plato, Producto
 from modelo.clientes import Cliente
-from modelo.pagos import MetodoPago, PagoEfectivo, PagoQR, PagoTarjeta
+from modelo.pagos import Efectivo, MetodoPago, QR, Tarjeta
 from modelo.pedidos import (
     Pedido,
-    PedidoDelivery,
-    PedidoLocal,
-    PedidoParaLlevar,
+    Delivery,
+    Local,
+    ParaLlevar,
     PedidoProducto,
 )
 
@@ -16,15 +16,16 @@ __all__ = [
     "Plato",
     "Bebida",
     "Combo",
+    "ComboProducto",
     "Cliente",
     "PedidoProducto",
     "Pedido",
-    "PedidoLocal",
-    "PedidoParaLlevar",
-    "PedidoDelivery",
+    "Local",
+    "ParaLlevar",
+    "Delivery",
     "MetodoPago",
-    "PagoEfectivo",
-    "PagoQR",
-    "PagoTarjeta",
+    "Efectivo",
+    "QR",
+    "Tarjeta",
 ]
 

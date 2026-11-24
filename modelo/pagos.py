@@ -13,11 +13,11 @@ def validar_total(total):
 
 class MetodoPago(ABC):
     def __init__(self):
-        self._monto_pagado = 0.0
+        self._monto = 0.0
 
     @property
-    def monto_pagado(self):
-        return self._monto_pagado
+    def monto(self):
+        return self._monto
 
     @property
     @abstractmethod
@@ -33,7 +33,7 @@ class MetodoPago(ABC):
         """Procesa el pago y devuelve los datos del comprobante."""
 
 
-class PagoEfectivo(MetodoPago):
+class Efectivo(MetodoPago):
     def __init__(self, monto_recibido):
         super().__init__()
         if isinstance(monto_recibido, bool) or not isinstance(
@@ -61,7 +61,7 @@ class PagoEfectivo(MetodoPago):
     def procesar_pago(self, total):
         total = validar_total(total)
         cambio = self.calcular_cambio(total)
-        self._monto_pagado = total
+        self._monto = total
         return {
             "metodo": self.nombre,
             "total": total,
@@ -70,7 +70,7 @@ class PagoEfectivo(MetodoPago):
         }
 
 
-class PagoQR(MetodoPago):
+class QR(MetodoPago):
     def __init__(self, codigo_transaccion):
         super().__init__()
         codigo = str(codigo_transaccion).strip()
@@ -88,7 +88,7 @@ class PagoQR(MetodoPago):
 
     def procesar_pago(self, total):
         total = validar_total(total)
-        self._monto_pagado = total
+        self._monto = total
         return {
             "metodo": self.nombre,
             "total": total,
@@ -96,12 +96,12 @@ class PagoQR(MetodoPago):
         }
 
 
-class PagoTarjeta(MetodoPago):
+class Tarjeta(MetodoPago):
     COMISION = 0.03
 
     def __init__(self):
         super().__init__()
-        self._porcentaje_comision = self.COMISION
+        self._comision = self.COMISION
 
     @property
     def nombre(self):
@@ -112,18 +112,18 @@ class PagoTarjeta(MetodoPago):
         return False
 
     @property
-    def porcentaje_comision(self):
-        return self._porcentaje_comision
+    def comision(self):
+        return self._comision
 
     def calcular_comision(self, total):
         total = validar_total(total)
-        return round(total * self.porcentaje_comision, 2)
+        return round(total * self.comision, 2)
 
     def procesar_pago(self, total):
         total = validar_total(total)
         comision = self.calcular_comision(total)
         total_con_comision = round(total + comision, 2)
-        self._monto_pagado = total_con_comision
+        self._monto = total_con_comision
         return {
             "metodo": self.nombre,
             "subtotal_cobro": total,

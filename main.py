@@ -3,10 +3,10 @@
 from datetime import date
 
 from modelo.clientes import Cliente
-from modelo.pagos import PagoEfectivo, PagoQR, PagoTarjeta
-from modelo.pedidos import Pedido, PedidoDelivery, PedidoLocal, PedidoParaLlevar
+from modelo.pagos import Efectivo, QR, Tarjeta
+from modelo.pedidos import Delivery, Local, ParaLlevar, Pedido
 from modelo.productos import Bebida, Combo, Plato
-from restaurante import Restaurante
+import restaurante as servicio
 from persistencia import cargar_json, guardar_json
 
 
@@ -49,25 +49,25 @@ def mostrar_pedidos(pedidos):
 
 
 def seleccionar_producto(restaurante):
-    mostrar_productos(restaurante.productos)
+    mostrar_productos(restaurante["productos"])
     posicion = leer_entero("Número del producto: ") - 1
-    if posicion < 0 or posicion >= len(restaurante.productos):
+    if posicion < 0 or posicion >= len(restaurante["productos"]):
         raise ValueError("Selección de producto inválida")
-    return restaurante.productos[posicion]
+    return restaurante["productos"][posicion]
 
 
 def seleccionar_cliente(restaurante):
-    mostrar_clientes(restaurante.clientes)
+    mostrar_clientes(restaurante["clientes"])
     posicion = leer_entero("Número del cliente: ") - 1
-    if posicion < 0 or posicion >= len(restaurante.clientes):
+    if posicion < 0 or posicion >= len(restaurante["clientes"]):
         raise ValueError("Selección de cliente inválida")
-    return restaurante.clientes[posicion]
+    return restaurante["clientes"][posicion]
 
 
 def seleccionar_pedido(restaurante):
-    mostrar_pedidos(restaurante.pedidos)
+    mostrar_pedidos(restaurante["pedidos"])
     numero = leer_entero("Número del pedido: ")
-    return restaurante.buscar_pedido(numero)
+    return servicio.buscar_pedido(restaurante, numero)
 
 
 def registrar_producto(restaurante):
@@ -90,27 +90,27 @@ def registrar_producto(restaurante):
         presentacion = input("Presentación (vaso/jarra): ").strip()
         producto = Bebida(nombre, precio, tipo, presentacion)
     elif opcion == "3":
-        mostrar_productos(restaurante.productos)
+        mostrar_productos(restaurante["productos"])
         texto = input(
             "Números de al menos dos productos separados por coma: "
         ).strip()
         posiciones = [int(valor.strip()) - 1 for valor in texto.split(",")]
         productos = []
         for posicion in posiciones:
-            if posicion < 0 or posicion >= len(restaurante.productos):
+            if posicion < 0 or posicion >= len(restaurante["productos"]):
                 raise ValueError("Uno de los productos seleccionados no existe")
-            productos.append(restaurante.productos[posicion])
+            productos.append(restaurante["productos"][posicion])
         producto = Combo(nombre, productos)
     else:
         raise ValueError("Tipo de producto inválido")
 
-    restaurante.registrar_producto(producto)
+    servicio.registrar_producto(restaurante, producto)
     print(f"Producto registrado: {producto.nombre}")
 
 
 def listar_menu(restaurante):
     dia = input("Día de la semana: ").strip()
-    disponibles = restaurante.listar_menu_disponible(dia)
+    disponibles = servicio.listar_menu_disponible(restaurante, dia)
     print(f"\nMenú disponible para {dia}:")
     mostrar_productos(disponibles)
 
@@ -119,7 +119,7 @@ def registrar_cliente(restaurante):
     nombre = input("Nombre del cliente: ").strip()
     telefono = input("Teléfono: ").strip()
     cliente = Cliente(nombre, telefono)
-    restaurante.registrar_cliente(cliente)
+    servicio.registrar_cliente(restaurante, cliente)
     print(f"Cliente registrado: {cliente}")
 
 
@@ -127,22 +127,22 @@ def registrar_pedido(restaurante):
     cliente = seleccionar_cliente(restaurante)
     print("\n1. Local\n2. Para llevar\n3. Delivery")
     opcion = input("Tipo de pedido: ").strip()
-    numero = restaurante.siguiente_numero_pedido
+    numero = servicio.siguiente_numero_pedido(restaurante)
 
     if opcion == "1":
         mesa = leer_entero("Mesa (1 a 15): ")
-        if not restaurante.mesa_disponible(mesa):
+        if not servicio.mesa_disponible(restaurante, mesa):
             raise ValueError("La mesa ya tiene un pedido abierto")
-        pedido = PedidoLocal(numero, cliente, mesa)
+        pedido = Local(numero, cliente, mesa)
     elif opcion == "2":
-        pedido = PedidoParaLlevar(numero, cliente)
+        pedido = ParaLlevar(numero, cliente)
     elif opcion == "3":
         zona = input("Zona (Cercado/Quillacollo/Sacaba/Vinto): ").strip()
-        pedido = PedidoDelivery(numero, cliente, zona)
+        pedido = Delivery(numero, cliente, zona)
     else:
         raise ValueError("Tipo de pedido inválido")
 
-    restaurante.registrar_pedido(pedido)
+    servicio.registrar_pedido(restaurante, pedido)
     print(f"Pedido {pedido.numero_pedido} registrado")
 
 
@@ -213,12 +213,12 @@ def cobrar_pedido(restaurante):
 
     if opcion == "1":
         recibido = leer_decimal("Monto recibido: Bs ")
-        metodo = PagoEfectivo(recibido)
+        metodo = Efectivo(recibido)
     elif opcion == "2":
         codigo = input("Código de transacción de 10 dígitos: ").strip()
-        metodo = PagoQR(codigo)
+        metodo = QR(codigo)
     elif opcion == "3":
-        metodo = PagoTarjeta()
+        metodo = Tarjeta()
     else:
         raise ValueError("Método de pago inválido")
 
@@ -229,7 +229,7 @@ def cobrar_pedido(restaurante):
 
 
 def mostrar_reporte(restaurante):
-    reporte = restaurante.reporte_ventas(date.today())
+    reporte = servicio.reporte_ventas(restaurante, date.today())
     print(f"\nReporte de ventas {reporte['fecha']}")
     print(f"Total general: Bs {reporte['total_general']:.2f}")
     for tipo, cantidad in reporte["cantidad_por_tipo"].items():
@@ -273,7 +273,7 @@ def mostrar_menu_principal():
 
 
 def ejecutar():
-    restaurante = Restaurante()
+    restaurante = servicio.crear_sistema()
     acciones = {
         "1": registrar_producto,
         "2": listar_menu,
