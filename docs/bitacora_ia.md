@@ -1,103 +1,36 @@
 # Bitácora de uso de IA
 
-Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo se consulte un concepto.
+- **Estudiante:** Andrés Claros
+- **Variante:** A
+- **Semana:** 4
 
-## Registro 1
+| N.º | Fecha | Herramienta | Tipo de uso (concepto, error, revisión, generación de código) | Consulta textual | Qué acepté | Qué modifiqué y por qué | Archivo o clase | ¿Lo explico sin ayuda? (Sí, Parcial, No) |
+|---:|---|---|---|---|---|---|---|---|
+| 1 | 23/11/2026 | ChatGPT Codex | Concepto y planificación | analiza este documento y ayudame con la tarea de la primera semana que pide el docente que podamos realizar, entonces examina y guiame como debo proceder, paso a paso para que yo pueda diagramar en papel y despues pueda presentar a mi docente | La explicación de lo requerido para la primera semana | Organicé los requisitos del modelado y la preparación del diagrama en papel | `PLAN_PROYECTO.md`, `docs/acta_consultas.md` | Parcial |
+| 2 | 23/11/2026 | ChatGPT Codex | Concepto y revisión | solo necesito lo que debo presentar la primer semana para hacerlo bien paso a paso, necesito que me indiques, clases atributos metodos, clases madre clases hija, sus herencias o lo que pide | La identificación inicial de clases, atributos, métodos y herencias | Usé la guía para completar el modelado presencial; el diagrama siguió siendo realizado y aprobado en papel | `docs/diagrama_v1.png` | Parcial |
+| 3 | 23/11/2026 | ChatGPT Codex | Concepto | como podria hacer esta parte de aca, explicame y ayudame a hacerlo correctamente y plasmarlo en papel | La explicación de productos, encapsulación, Combo y validaciones | Apliqué las indicaciones al diseño de la jerarquía Producto | `modelo/productos.py`, diagrama en papel | Parcial |
+| 4 | 23/11/2026 | ChatGPT Codex | Planificación | quiero que me ayudes con las indicaciones de como hacer este proyecto completamente y que este bien hecho desde inicio a fin segun lo que pide el docente en este archivo | Un plan para continuar desde el diagrama de la primera semana | Organicé el desarrollo, las pruebas, la documentación y la preparación de la defensa | `PLAN_PROYECTO.md` | Parcial |
+| 5 | 23/11/2026 | ChatGPT Codex | Generación de código | con la variante A | La implementación de las reglas asignadas a la variante A | Implementé 10 % de descuento, Bs 2 por plato, mínimo Bs 40, envío gratis en Cercado desde Bs 150 y chicharrón solo el domingo | `modelo/`, `pruebas.py` | Parcial |
+| 6 | 23/11/2026 | ChatGPT Codex | Revisión | aun no publiques el repositorio, debo ver que el proyecto tenga lo necesario para que este entregable | Mantener el repositorio únicamente de forma local | No configuré remoto ni publiqué el proyecto; primero realicé verificaciones locales | Repositorio local | Parcial |
+| 7 | 23/11/2026 | ChatGPT Codex | Concepto | desde el vsCode debo abrir mi carpeta de este proyecto? cual debo abrir? | Abrir únicamente la carpeta raíz `sabor_valluno` | No modifiqué código; apliqué la estructura correcta de trabajo en VS Code | Carpeta `sabor_valluno` | Parcial |
+| 8 | 23/11/2026 | ChatGPT Codex | Concepto | tengo esas versiones, cual es la que mejor opcion a elegir | La recomendación de usar Python 3.13 de 64 bits instalado localmente | Seleccioné el intérprete de Python 3.13 en VS Code; no se modificó el proyecto | Configuración de VS Code | Parcial |
+| 9 | 23/11/2026 | ChatGPT Codex | Revisión | quiero que hagas una evaluacion de las cosas que se hicieron paso a paso desde inicio hasta ahora donde se tiene este proyecto, y asi identificar detalles que se pasaron por alto | La auditoría integral del proyecto y la lista de prioridades | Revisé requisitos, diagrama, código, pruebas y documentación para detectar inconsistencias | Proyecto completo | Parcial |
+| 10 | 23/11/2026 | ChatGPT Codex | Revisión | entonces hagamos las correcciones mas importante, empezando por el que tiene que ver con el diagrama que es el pilar de este proyecto | Corregir primero la correspondencia entre diagrama y código | Documenté las diferencias y preparé la evolución del diagrama antes de adaptar el código | `docs/cambios_v1_v2.md`, `docs/diagrama_v2.png` | Parcial |
+| 11 | 23/11/2026 | ChatGPT Codex | Revisión | ese el diagrama que fue sellado por el docente | Usar la fotografía sellada como evidencia oficial del v1 | Conservé la fotografía aprobada y la usé como línea base | `docs/diagrama_v1.png` | Parcial |
+| 12 | 24/11/2026 | ChatGPT Codex | Revisión | sobre los diagrmas que esta ahi, necesito que no se cambie demasiado porque el docente no permite rehacer o hacer grandes cambios en el diagrama | Limitar las modificaciones principalmente a atributos y métodos | Descarté propuestas con cambios estructurales excesivos y conservé `ComboProducto` y los nombres del papel | `docs/diagrama_v2.png`, `docs/cambios_v1_v2.md` | Parcial |
+| 13 | 24/11/2026 | ChatGPT Codex | Generación y revisión de código | listo, que sea el oficial, que sea el diagrama v2, y partir de ahi que se haga el codigo | Adaptar el código desde el diagrama v2 oficial | Implementé las clases y nombres del modelo, corregí validaciones y amplié las pruebas a doce casos | `modelo/`, `main.py`, `persistencia.py`, `pruebas.py` | Parcial |
+| 14 | 24/11/2026 | ChatGPT Codex | Revisión | tengo mi imagen en papel, hay pequeños cambios, pero son sutiles en los metodos mas que todo, solo revisalo y corrige esos pequeños cambios y continua | Revisar los métodos de la nueva fotografía sin rediseñar el modelo | Contrasté la fotografía con el código y mantuve la estructura del papel | `docs/diagrama_v2.png`, `modelo/` | Parcial |
+| 15 | 24/11/2026 | ChatGPT Codex | Generación y revisión de código | usa ese modelo tal cual, no hagas mas nada, usalo para hacer el codigo | Usar la última fotografía como diagrama v2 definitivo sin agregar clases | La fotografía quedó como v2 oficial; retiré propuestas redundantes y dejé la coordinación general en funciones para no agregar una clase ausente del papel | `docs/diagrama_v2.png`, `restaurante.py`, documentación | Parcial |
+| 16 | 24/11/2026 | ChatGPT Codex | Concepto y revisión | sigamos con el siguiente paso será estudiar el proyecto clase por clase y preparar mi defensa, ademas quiero que me indiques como puedo subir este proyecto a github | La guía de estudio, el guion de defensa y los pasos de publicación | No modifiqué código; utilicé la explicación para estudiar las jerarquías y preparar la publicación | `docs/guia_estudio_codigo.md`, `docs/guia_defensa.md`, `docs/guia_github.md` | Parcial |
+| 17 | 24/11/2026 | ChatGPT Codex | Concepto | dame los comando que se necesitan para abrir el archivo; y el menu? para hacer la interaccion?; donde esta producto.py? | Los comandos para abrir la carpeta, ejecutar el menú y localizar `productos.py` | No modifiqué código; ejecuté `main.py` y localicé los archivos desde VS Code | `main.py`, `modelo/productos.py` | Parcial |
+| 18 | 24/11/2026 | ChatGPT Codex | Error y revisión | ya puse publish git hub y nada nose que mas procede | El diagnóstico del estado local y los pasos para crear y conectar el repositorio | Comprobé que no existía remoto y detecté un cambio de formato pendiente en `productos.py`; no publiqué en nombre del estudiante | Git local, VS Code y GitHub | Parcial |
+| 19 | 24/11/2026 | ChatGPT Codex | Concepto | en las carpetas estan mis vitacoras de uso de IA para mostrarle al docente/ | La ubicación y propósito de las bitácoras y del acta | No modifiqué código; identifiqué los documentos que deben presentarse | `docs/bitacora_ia.md`, `docs/registro_ia_claros.md`, `docs/acta_consultas.md` | Parcial |
+| 20 | 24/11/2026 | ChatGPT Codex | Concepto | donde se usa abstraccion en este proyecto, donde se usa el polimorfismo, encapsulamiento para tener guia | La explicación de abstracción, herencia, polimorfismo y encapsulamiento con ejemplos del proyecto | No modifiqué código; usé la respuesta como guía para la defensa | `modelo/productos.py`, `modelo/pedidos.py`, `modelo/pagos.py` | Parcial |
+| 21 | 24/11/2026 | ChatGPT Codex | Revisión | en el documento del docente hay un formato de bitacoras que el docente dejo para el uso de ia, entonces necesito que la bitacora de uso de ia que generaste pueda estar ahi mismo pero usando ese formato | Convertir la bitácora al modelo de nueve columnas indicado por el docente | Reorganicé todos los registros con fecha, herramienta, tipo, consulta textual, aceptación, modificación, archivo y nivel de explicación | `docs/bitacora_ia.md`, `docs/registro_ia_claros.md` | Parcial |
+| 22 | 24/11/2026 | ChatGPT Codex | Revisión | la botacora debe estar dentro de vscode | Mantener la bitácora como Markdown dentro del repositorio | Guardé la bitácora en `docs/` para verla, editarla y entregarla desde VS Code | `docs/bitacora_ia.md`, `docs/registro_ia_claros.md` | Parcial |
 
-- Fecha: 23/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: interpretación de consigna y planificación
-- Consulta textual: solicitud de acompañamiento desde la semana posterior al modelado hasta terminar el proyecto
-- Qué se aceptó: estructura semanal, lista de entregables y organización inicial de carpetas
-- Qué se modificó y por qué: no se generó código porque todavía faltan la variante y el diagrama v1
-- Archivo o clase: `PLAN_PROYECTO.md`, `docs/acta_consultas.md`, `docs/bitacora_ia.md`
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
+## Declaración
 
-## Plantilla para los siguientes usos
+Declaro que este registro incluye todos mis usos de IA en el proyecto y que puedo explicar el código que entrego.
 
-- Fecha:
-- Herramienta:
-- Tipo de uso:
-- Consulta textual:
-- Qué se aceptó:
-- Qué se modificó y por qué:
-- Archivo o clase:
-- ¿Lo explico sin ayuda?:
-
-## Registro 2
-
-- Fecha: 23/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: revisión de diagrama
-- Consulta textual: envío de fotografía del diagrama v1 realizado en aula
-- Qué se aceptó: conservar el diagrama original y documentar las correcciones para el v2
-- Qué se modificó y por qué: se propuso mover la cantidad a `PedidoProducto`, hacer que `Combo` herede de `Producto` y renombrar las clases según la consigna
-- Archivo o clase: `docs/diagrama_v1.jpg`, `docs/revision_diagrama_v1.md`
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
-
-## Registro 3
-
-- Fecha: 23/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: generación y revisión de código
-- Consulta textual: confirmación de la variante A y solicitud de continuar el proyecto
-- Qué se aceptó: jerarquías de productos, pedidos y pagos; clase gestora; pruebas y menú de consola
-- Qué se modificó y por qué: se eliminó la comprobación por tipo dentro de `Combo` para usar polimorfismo; posteriormente se retiró la regla de retraso porque el docente decidió no evaluarla
-- Archivo o clase: `modelo/`, `restaurante.py`, `main.py`, `pruebas.py`
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
-
-## Registro 4
-
-- Fecha: 23/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: generación y prueba de funcionalidad opcional
-- Consulta textual: continuar completando el proyecto mientras se confirmaba el alcance de la regla de retraso
-- Qué se aceptó: guardado y carga de datos mediante JSON
-- Qué se modificó y por qué: se añadió `persistencia.py` separado para no mezclar serialización con los cálculos del modelo
-- Archivo o clase: `persistencia.py`, `main.py`, `pruebas.py`
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
-
-## Registro 5
-
-- Fecha: 23/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: revisión y corrección del diagrama de clases v2
-- Consulta textual: "entonces hagamos las correcciones mas importante, empezando por el que tiene que ver con el diagrama que es el pilar de este proyecto y ademas recuerdo que el docente repitio emcarecidamente que el codigo debe estar deacuerdo a los diagrmas"
-- Qué se aceptó: completar el diagrama v2 para que represente fielmente el código actual y las exigencias del documento del docente
-- Qué se modificó y por qué: se agregaron atributos, propiedades, constructores, métodos, tipos, visibilidad, relaciones, multiplicidades y doce notas de cambios respecto al v1. También se verificó automáticamente que las 15 clases y sus 126 métodos aparezcan en el archivo Mermaid. No se modificó el código del modelo en esta etapa.
-- Archivo o clase: `docs/diagrama_v2.mmd`, `docs/diagrama_v2.png`
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
-
-## Registro 6
-
-- Fecha: 23/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: revisión visual con fotografía del diagrama v1 aprobado
-- Consulta textual: "ese el diagrama que fue sellado por el docente"
-- Qué se aceptó: utilizar la fotografía sellada como línea base oficial y mantener en el v2 la misma distribución visual de productos, pedidos, pagos, cliente y clases hijas
-- Qué se modificó y por qué: se reemplazó `docs/diagrama_v1.png` por la fotografía aprobada; el v2 se reorganizó para seguir el formato del papel, se conservaron las cajas y flechas de herencia y se añadió un reporte detallado que justifica cada diferencia. El código no se modificó.
-- Archivo o clase: `docs/diagrama_v1.png`, `docs/diagrama_v2.png`, `docs/diagrama_v2.mmd`, `docs/cambios_v1_v2.md`, `docs/revision_diagrama_v1.md`
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
-
-## Registro 7
-
-- Fecha: 24/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: replanteamiento del diagrama con cambios mínimos
-- Consulta textual: "sobre los diagrmas que esta ahi, necesito que no se cambie demasiado porque el docente no permite rehacer o hacer grandes cambios en el diagrama y que solo me limite a cambiar atributos o metodos en lo posible, pero si hay algo que mejore el codigo que este primero en el diagrama ya que a partir de eso se hara el codigo"
-- Qué se aceptó: conservar las clases y distribución del v1 y preparar primero una propuesta de diagrama antes de adaptar el código
-- Qué se modificó y por qué: se creó una propuesta separada que mantiene ComboProducto, Local, ParaLlevar, Delivery, Efectivo, QR y Tarjeta. Solo se señalan como cambios estructurales inevitables la herencia de Combo, el nombre MetodoPago y la clase gestora Restaurante. El v2 vigente, el código y el ZIP todavía no fueron sustituidos.
-- Archivo o clase: `docs/diagrama_v2_propuesta_minima.png`, `docs/diagrama_v2_propuesta_minima.mmd`, `docs/reporte_propuesta_cambios_minimos.md`
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
-
-## Registro 8
-
-- Fecha: 24/11/2026
-- Herramienta: ChatGPT Codex
-- Tipo de uso: adaptación del código al diagrama definitivo
-- Consulta textual: "usa ese modelo tal cual, no hagas mas nada, usalo para hacer el codigo"
-- Qué se aceptó: utilizar la última fotografía como único diagrama v2 y no agregar clases ni relaciones
-- Qué se modificó y por qué: se reemplazó el v2 digital por la fotografía, se retiraron las propuestas redundantes, se adaptaron los nombres y relaciones del código, se implementó `ComboProducto`, se trasladó la gestión general a funciones y se añadieron doce pruebas.
-- Archivo o clase: `docs/diagrama_v2.png`, `modelo/`, `restaurante.py`, `main.py`, `persistencia.py`, `pruebas.py`, documentación
-- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
-
+**Firma:** ______________________________
