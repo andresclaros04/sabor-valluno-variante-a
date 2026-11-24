@@ -79,3 +79,14 @@ Todo uso de IA relacionado con el proyecto debe registrarse, incluso cuando solo
 - Archivo o clase: `docs/diagrama_v1.png`, `docs/diagrama_v2.png`, `docs/diagrama_v2.mmd`, `docs/cambios_v1_v2.md`, `docs/revision_diagrama_v1.md`
 - ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
 
+## Registro 7
+
+- Fecha: 24/11/2026
+- Herramienta: ChatGPT Codex
+- Tipo de uso: replanteamiento del diagrama con cambios mínimos
+- Consulta textual: "sobre los diagrmas que esta ahi, necesito que no se cambie demasiado porque el docente no permite rehacer o hacer grandes cambios en el diagrama y que solo me limite a cambiar atributos o metodos en lo posible, pero si hay algo que mejore el codigo que este primero en el diagrama ya que a partir de eso se hara el codigo"
+- Qué se aceptó: conservar las clases y distribución del v1 y preparar primero una propuesta de diagrama antes de adaptar el código
+- Qué se modificó y por qué: se creó una propuesta separada que mantiene ComboProducto, Local, ParaLlevar, Delivery, Efectivo, QR y Tarjeta. Solo se señalan como cambios estructurales inevitables la herencia de Combo, el nombre MetodoPago y la clase gestora Restaurante. El v2 vigente, el código y el ZIP todavía no fueron sustituidos.
+- Archivo o clase: `docs/diagrama_v2_propuesta_minima.png`, `docs/diagrama_v2_propuesta_minima.mmd`, `docs/reporte_propuesta_cambios_minimos.md`
+- ¿Lo explico sin ayuda?: pendiente de completar por el estudiante
+
